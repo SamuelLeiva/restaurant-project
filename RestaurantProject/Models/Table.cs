@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestaurantProject.Modelos;
+namespace RestaurantProject.Models;
 
 public class Table
 {
