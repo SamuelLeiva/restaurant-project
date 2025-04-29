@@ -47,21 +47,9 @@ public class ClientService : IClientService
         Console.WriteLine($"Cliente agregado: {newClient.Name}");
     }
 
-    public void GetAllClients()
+    public List<Client> GetAllClients()
     {
-        if (clientsDB.Count == 0)
-        {
-            Console.WriteLine("No hay ningún cliente");
-            return;
-        }
-
-        Console.WriteLine("Lista de Clientes");
-        Console.WriteLine("ID\tNombre\tDNI\tDirección\tEdad");
-        Console.WriteLine("----------------------------------");
-        foreach (Client client in clientsDB)
-        {
-            Console.WriteLine($"{client.Id}\t{client.Name}\t{client.Dni}\t{client.Address}\t\t{client.Age}");
-        }
+        return clientsDB;
     }
 
     public void GetClientByDni()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RestaurantProject.Controllers;
 using RestaurantProject.Models;
 using RestaurantProject.Models.Interfaces;
 using RestaurantProject.Services;
@@ -13,7 +14,7 @@ public class RestaurantSystem
 {
 
     //servicios
-    private readonly IClientService clientService = new ClientService();
+    private readonly ClientController clientController = new ClientController();
 
     public void ClientManagement()
     {
@@ -30,13 +31,13 @@ public class RestaurantSystem
         switch (option)
         {
             case "1":
-                clientService.GetAllClients();
+                clientController.GetAllClients();
                 break;
             case "2":
-                clientService.GetClientByDni();
+                //clientService.GetClientByDni();
                 break;
             case "3":
-                clientService.CreateClient();
+                //clientService.CreateClient();
                 break;
             case "0":
                 exit = true;
@@ -62,7 +63,7 @@ public class RestaurantSystem
         //agregar mesas
 
         //agregar clientes
-        clientService.FillClients();
+        clientController.FillInitialClients();
 
         //agregar reservas
     }
