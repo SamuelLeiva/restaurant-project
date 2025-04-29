@@ -83,7 +83,7 @@ public class ClientService : IClientService
         Console.WriteLine($"{client.Id}\t{client.Name}\t{client.Dni}\t{client.Address}\t{client.Age}\n");
     }
 
-    public void FillData()
+    public void FillClients()
     {
         var client1 = new Client()
         {

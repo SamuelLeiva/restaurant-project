@@ -4,8 +4,10 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        //RestaurantSystem system = new RestaurantSystem();
+        RestaurantSystem restaurantSystem = new RestaurantSystem();
         //llenar de datos (clientes, mesas y reservas)
+        restaurantSystem.FillData();
+        
 
         bool exit = false;
         string opcion;
@@ -25,7 +27,7 @@ internal class Program
                 switch (opcion)
                 {
                     case "1":
-                        //ClientManagement();
+                        restaurantSystem.ClientManagement();
                         break;
                     case "2":
                         //TableManagement();

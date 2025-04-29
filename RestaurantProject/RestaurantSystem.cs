@@ -13,9 +13,9 @@ public class RestaurantSystem
 {
 
     //servicios
-    private IClientService clientService = new ClientService();
+    private readonly IClientService clientService = new ClientService();
 
-    void ClientManagement()
+    public void ClientManagement()
     {
         Console.WriteLine("========== GESTIÓN DE CLIENTES ==========");
         Console.WriteLine("1.Ver lista de clientes");
@@ -33,7 +33,7 @@ public class RestaurantSystem
                 clientService.GetAllClients();
                 break;
             case "2":
-                clientService.GetClientById();
+                clientService.GetClientByDni();
                 break;
             case "3":
                 clientService.CreateClient();
@@ -57,11 +57,12 @@ public class RestaurantSystem
     {
     }
 
-    void FillData()
+    public void FillData()
     {
         //agregar mesas
 
         //agregar clientes
+        clientService.FillClients();
 
         //agregar reservas
     }

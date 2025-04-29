@@ -11,4 +11,6 @@ public interface IClientService
     void GetAllClients();
     void GetClientByDni();
     void CreateClient();
+
+    void FillClients();
 }
