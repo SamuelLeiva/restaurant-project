@@ -9,6 +9,6 @@ namespace RestaurantProject.Models.Interfaces;
 public interface IClientService
 {
     void GetAllClients();
-    Client GetClientById(int id);
+    void GetClientById(int id);
     void CreateClient();
 }
