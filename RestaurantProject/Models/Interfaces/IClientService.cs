@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RestaurantProject.Models.Enums;
 
 namespace RestaurantProject.Models.Interfaces;
 
 public interface IClientService
 {
     List<Client> GetAllClients();
-    void GetClientByDni();
-    void CreateClient();
-
+    Client GetClientByDni(string dni);
+    void CreateClient(Client client);
     void FillClients();
 }

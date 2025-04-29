@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RestaurantProject.Models;
+using RestaurantProject.Models.Enums;
 using RestaurantProject.Models.Interfaces;
 using RestaurantProject.Services;
 
@@ -15,7 +16,34 @@ public class ClientController
     private readonly IClientService clientService = new ClientService();
     public void CreateClient()
     {
+        Console.WriteLine("\nAgregar un nuevo cliente:");
 
+        Console.WriteLine("Nombre del cliente: ");
+        string name = Console.ReadLine();
+
+        Console.WriteLine("Género del cliente (0:Masculino, 1:Femenino): ");
+        Genre genre = (Genre)Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("DNI del cliente");
+        string dni = Console.ReadLine();
+
+        Console.WriteLine("Dirección del cliente");
+        string adress = Console.ReadLine();
+
+        Console.WriteLine("Edad del cliente");
+        int age = Convert.ToInt32(Console.ReadLine());
+
+        var newClient = new Client()
+        {
+            Name = name,
+            Genre = genre,
+            Dni = dni,
+            Address = adress,
+            Age = age
+        };
+
+        clientService.CreateClient(newClient);
+        Console.WriteLine($"Cliente agregado: {newClient.Name}");
     }
 
     public void GetAllClients()
