@@ -66,7 +66,21 @@ public class ClientController
 
     public void GetClientByDni()
     {
+        Console.WriteLine("Ingrese el DNI del cliente");
+        string dni = Console.ReadLine();
 
+        Client client = clientService.GetClientByDni(dni);
+
+        if (client == null)
+        {
+            Console.WriteLine("Cliente no existe.");
+            return;
+        }
+
+        Console.WriteLine("Cliente encontrado");
+        Console.WriteLine("ID\tNombre\tDNI\tDirección\tEdad");
+        Console.WriteLine("----------------------------------");
+        Console.WriteLine($"{client.Id}\t{client.Name}\t{client.Dni}\t{client.Address}\t{client.Age}\n");
     }
 
     public void FillInitialClients()

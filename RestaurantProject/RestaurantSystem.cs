@@ -18,36 +18,37 @@ public class RestaurantSystem
 
     public void ClientManagement()
     {
-        Console.WriteLine("========== GESTIÓN DE CLIENTES ==========");
-        Console.WriteLine("1.Ver lista de clientes");
-        Console.WriteLine("2.Buscar cliente");
-        Console.WriteLine("3.Añadir nuevo cliente");
-        Console.WriteLine("0.Atrás");
-
         string option;
         bool exit = false;
-        option = Console.ReadLine();
-
-        switch (option)
+        while (!exit)
         {
-            case "1":
-                clientController.GetAllClients();
-                break;
-            case "2":
-                //clientService.GetClientByDni();
-                break;
-            case "3":
-                //clientService.CreateClient();
-                break;
-            case "0":
-                exit = true;
-                break;
-            default:
-                Console.WriteLine("Opción inválida. Elija una nueva opción");
-                break;
-        }
+            Console.WriteLine("========== GESTIÓN DE CLIENTES ==========");
+            Console.WriteLine("1.Ver lista de clientes");
+            Console.WriteLine("2.Buscar cliente");
+            Console.WriteLine("3.Añadir nuevo cliente");
+            Console.WriteLine("0.Atrás");
 
-        
+            option = Console.ReadLine();
+
+            switch (option)
+            {
+                case "1":
+                    clientController.GetAllClients();
+                    break;
+                case "2":
+                    clientController.GetClientByDni();
+                    break;
+                case "3":
+                    clientController.CreateClient();
+                    break;
+                case "0":
+                    exit = true;
+                    break;
+                default:
+                    Console.WriteLine("Opción inválida. Elija una nueva opción");
+                    break;
+            }
+        }
     }
 
     void TableManagement()
