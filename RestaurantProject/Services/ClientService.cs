@@ -27,7 +27,7 @@ public class ClientService : IClientService
 
     public List<Client> GetAllClients()
     {
-        return clientsDB;
+        return clientsDB.ToList();
     }
 
     public void FillClients()

@@ -30,7 +30,7 @@ internal class Program
                         restaurantSystem.ClientManagement();
                         break;
                     case "2":
-                        //TableManagement();
+                        restaurantSystem.TableManagement();
                         break;
                     case "3":
                         //ReserveManagement();

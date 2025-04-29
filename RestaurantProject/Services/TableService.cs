@@ -16,17 +16,12 @@ public class TableService : ITableService
         throw new NotImplementedException();
     }
 
-    public void GetAllTables()
+    public List<Table> GetAllTables()
     {
-        throw new NotImplementedException();
+        return _tables.ToList();
     }
 
     public Table GetTableById(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    List<Table> ITableService.GetAllTables()
     {
         throw new NotImplementedException();
     }
