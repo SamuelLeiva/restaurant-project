@@ -9,6 +9,7 @@ namespace RestaurantProject.Models.Interfaces;
 public interface ITableService
 {
     List<Table> GetAllTables();
+    List<Table> GetTablesByNumSeats(int numSeats);
     Table GetTableById(int id);
     void CreateTable();
     void FillTables();

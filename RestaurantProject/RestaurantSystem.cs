@@ -62,6 +62,7 @@ public class RestaurantSystem
             Console.WriteLine("1.Ver lista de mesas");
             Console.WriteLine("2.Buscar mesa por id");
             Console.WriteLine("3.Añadir nueva mesa");
+            Console.WriteLine("4.Buscar mesas por número de asientos");
             Console.WriteLine("0.Atrás");
 
             option = Console.ReadLine();
@@ -72,10 +73,12 @@ public class RestaurantSystem
                     tableController.GetAllTables();
                     break;
                 case "2":
-                    //clientController.GetClientByDni();
+                    tableController.GetTableById();
                     break;
                 case "3":
                     //clientController.CreateClient();
+                    break;
+                case "4":
                     break;
                 case "0":
                     exit = true;
@@ -94,6 +97,7 @@ public class RestaurantSystem
     public void FillData()
     {
         //agregar mesas
+        tableController.FillInitialTables();
 
         //agregar clientes
         clientController.FillInitialClients();

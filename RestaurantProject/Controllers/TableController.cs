@@ -38,4 +38,23 @@ public class TableController
             Console.WriteLine($"{table.Id}\t{table.NumSeats}");
         }
     }
+
+    public void GetTableById()
+    {
+        Console.WriteLine("Ingrese el DNI del cliente");
+        int id = Convert.ToInt32(Console.ReadLine());
+
+        Table table = tableService.GetTableById(id);
+
+        if (table == null)
+        {
+            Console.WriteLine("Mesa con ese id no existe.");
+            return;
+        }
+
+        Console.WriteLine("Mesa encontrada");
+        Console.WriteLine("ID\tN° de asientos");
+        Console.WriteLine("----------------------------------");
+        Console.WriteLine($"{table.Id}\t{table.NumSeats}\n");
+    }
 }

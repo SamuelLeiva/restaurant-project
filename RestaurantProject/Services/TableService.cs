@@ -23,6 +23,11 @@ public class TableService : ITableService
 
     public Table GetTableById(int id)
     {
+        return _tables.FirstOrDefault(t => t.Id == id);
+    }
+
+    public List<Table> GetTablesByNumSeats(int numSeats)
+    {
         throw new NotImplementedException();
     }
 
@@ -60,4 +65,6 @@ public class TableService : ITableService
         _tables.Add(table5);
         _tables.Add(table6);
     }
+
+    
 }
