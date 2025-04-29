@@ -8,7 +8,8 @@ namespace RestaurantProject.Models.Interfaces;
 
 public interface ITableService
 {
-    void GetAllTables();
+    List<Table> GetAllTables();
     Table GetTableById(int id);
     void CreateTable();
+    void FillTables();
 }
