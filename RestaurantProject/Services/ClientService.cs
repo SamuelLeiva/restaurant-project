@@ -58,13 +58,27 @@ public class ClientService : IClientService
         Console.WriteLine("----------------------------------");
         foreach (Client client in clientsDB)
         {
-            Console.WriteLine($"{client.Id}\t{client.Name}\t{client.Dni}\t{client.Adress}\t\t{client.Age}");
+            Console.WriteLine($"{client.Id}\t{client.Name}\t{client.Dni}\t{client.Address}\t\t{client.Age}");
         }
     }
 
-    public void GetClientById()
+    public void GetClientByDni()
     {
-        
+        Console.WriteLine("Ingrese el DNI del cliente");
+        string dni = Console.ReadLine();
+
+        var client = clientsDB.FirstOrDefault(c => c.Dni == dni);
+
+        if(client == null)
+        {
+            Console.WriteLine("Cliente no existe.");
+            return;
+        }
+
+        Console.WriteLine("Cliente encontrado");
+        Console.WriteLine("ID\tNombre\tDNI\tDirección\tEdad");
+        Console.WriteLine("----------------------------------");
+        Console.WriteLine($"{client.Id}\t{client.Name}\t{client.Dni}\t{client.Address}\t{client.Age}\n");
     }
 
     public void FillData()
