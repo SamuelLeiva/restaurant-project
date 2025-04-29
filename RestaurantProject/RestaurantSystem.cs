@@ -12,11 +12,6 @@ namespace RestaurantProject;
 public class RestaurantSystem
 {
 
-    //listas de mesas, clientes y reservas iniciales
-    private List<Table> tables = new List<Table>();
-    private List<Client> clients = new List<Client>();
-    private List<Reserve> reserves = new List<Reserve>();
-
     //servicios
     private IClientService clientService = new ClientService();
 
@@ -29,12 +24,26 @@ public class RestaurantSystem
         Console.WriteLine("0.Atrás");
 
         string option;
+        bool exit = false;
         option = Console.ReadLine();
 
         switch (option)
         {
             case "1":
-                var clientList = clientService.GetAllClients();
+                clientService.GetAllClients();
+                break;
+            case "2":
+                clientService.GetClientById();
+                break;
+            case "3":
+                clientService.CreateClient();
+                break;
+            case "0":
+                exit = true;
+                break;
+            default:
+                Console.WriteLine("Opción inválida. Elija una nueva opción");
+                break;
         }
 
         
