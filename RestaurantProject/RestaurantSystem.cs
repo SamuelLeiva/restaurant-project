@@ -16,6 +16,7 @@ public class RestaurantSystem
     //servicios
     private readonly ClientController clientController = new ClientController();
     private readonly TableController tableController = new TableController();
+    private readonly ReserveController reserveController = new ReserveController();
 
     public void ClientManagement()
     {
@@ -91,8 +92,43 @@ public class RestaurantSystem
         }
     }
 
-    void ReserveManagement()
+    public void ReserveManagement()
     {
+        string option;
+        bool exit = false;
+        while (!exit)
+        {
+            Console.WriteLine("========== GESTIÓN DE MESAS ==========");
+            Console.WriteLine("1.Ver lista de reservas");
+            Console.WriteLine("2.Buscar mesa por id");
+            Console.WriteLine("3.Añadir nueva mesa");
+            Console.WriteLine("4.Buscar mesas por número de asientos");
+            Console.WriteLine("0.Atrás");
+
+            option = Console.ReadLine();
+
+            switch (option)
+            {
+                case "1":
+                    reserveController.GetAllReserves();
+                    break;
+                case "2":
+                    //tableController.GetTableById();
+                    break;
+                case "3":
+                    //tableController.CreateTable();
+                    break;
+                case "4":
+                    //tableController.GetTablesByNumSeats();
+                    break;
+                case "0":
+                    exit = true;
+                    break;
+                default:
+                    Console.WriteLine("Opción inválida. Elija una nueva opción");
+                    break;
+            }
+        }
     }
 
     public void FillData()
@@ -103,7 +139,6 @@ public class RestaurantSystem
         //agregar clientes
         clientController.FillInitialClients();
 
-        //agregar reservas
     }
 }
 
