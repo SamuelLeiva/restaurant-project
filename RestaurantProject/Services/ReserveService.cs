@@ -39,4 +39,8 @@ public class ReserveService : IReserveService
         return reservesDB.FindAll(r => r.Table.Id == tableId);
     }
 
+    public Reserve GetReserveByTableAndDate(int tableId, DateTime date)
+    {
+        return reservesDB.FirstOrDefault(r => r.Table.Id == tableId && r.DateAndHour == date);
+    }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RestaurantProject.Models;
+using RestaurantProject.Models.Enums;
 using RestaurantProject.Models.Interfaces;
 using RestaurantProject.Services;
 
@@ -123,6 +124,46 @@ public class ReserveController
         foreach (Reserve reserve in reserveList)
         {
             Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status.ToString()}\t{reserve.Client.Name}\t{reserve.Table.Id}");
+        }
+    }
+
+    public void CreateReserve()
+    {
+        Console.WriteLine("\n=== Crear nueva reserva ===");
+        // ingresar el n° de asientos
+        Console.WriteLine("Ingrese el n° de aientos deseados");
+        int numSeats = Convert.ToInt32(Console.ReadLine());
+        // ingresar fecha de la reserva
+        Console.WriteLine("Ingrese el día de la reserva");
+        int day = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Ingrese el mes de la reserva");
+        int month = Convert.ToInt32(Console.ReadLine());
+        //año actual
+        int year = DateTime.Now.Year;
+
+        // buscar las mesas con ese n° de asientos
+        List<Table> tables = tableService.GetTablesByNumSeats(numSeats);
+        //buscar si existe una reserva en esa mesa con esa fecha y hora
+        foreach (Table table in tables)
+        {
+            //obtener reserva por fecha y mesa
+            Reserve reserve = reserveService.GetReserveByTableAndDate(table.Id, new DateTime(year, month, day));
+
+            if (reserve != null)
+            {
+                //crear la reserva
+                var newReserve = new Reserve 
+                {
+                    DateAndHour = new DateTime(year, month, day),
+                    Status = ReserveStatus.ACTIVO,
+                    Table = table,
+                    
+                };
+
+                reserveService.CreateReserve(reserve);
+                Console.WriteLine("Reserva creada");
+                return;
+            }
         }
     }
 }
