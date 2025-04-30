@@ -79,6 +79,7 @@ public class RestaurantSystem
                     tableController.CreateTable();
                     break;
                 case "4":
+                    tableController.GetTablesByNumSeats();
                     break;
                 case "0":
                     exit = true;

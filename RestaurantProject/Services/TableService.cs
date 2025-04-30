@@ -19,7 +19,7 @@ public class TableService : ITableService
 
     public List<Table> GetAllTables()
     {
-        return _tables.ToList();
+        return _tables;
     }
 
     public Table GetTableById(int id)
@@ -29,7 +29,7 @@ public class TableService : ITableService
 
     public List<Table> GetTablesByNumSeats(int numSeats)
     {
-        throw new NotImplementedException();
+        return _tables.FindAll(t => t.NumSeats >= numSeats);
     }
 
     public void FillTables()

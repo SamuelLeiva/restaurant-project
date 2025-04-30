@@ -59,6 +59,27 @@ public class TableController
         Console.WriteLine($"{table.Id}\t{table.NumSeats}\n");
     }
 
+    public void GetTablesByNumSeats()
+    {
+        Console.WriteLine("Ingrese el n° de asientos que necesita");
+        int numSeats = Convert.ToInt32(Console.ReadLine());
+
+        List<Table> tableList = tableService.GetTablesByNumSeats(numSeats);
+
+        if (tableList.Count == 0)
+        {
+            Console.WriteLine($"No se encontraron mesas con mínimo {numSeats} asientos.");
+            return;
+        }
+
+        foreach (Table table in tableList)
+        {
+            Console.WriteLine("Mesas encontradas");
+            Console.WriteLine("Id\tN° de asientos");
+            Console.WriteLine($"{table.Id}\t{table.NumSeats}");
+        }
+    }
+
     public void CreateTable()
     {
         Console.WriteLine("\nAgregar una nueva mesa:");
