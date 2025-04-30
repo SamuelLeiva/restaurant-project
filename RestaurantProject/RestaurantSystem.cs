@@ -100,7 +100,7 @@ public class RestaurantSystem
         {
             Console.WriteLine("========== GESTIÓN DE MESAS ==========");
             Console.WriteLine("1.Ver lista de reservas");
-            Console.WriteLine("2.Buscar mesa por id");
+            Console.WriteLine("2.Obtener reservas por cliente");
             Console.WriteLine("3.Añadir nueva mesa");
             Console.WriteLine("4.Buscar mesas por número de asientos");
             Console.WriteLine("0.Atrás");
@@ -113,7 +113,7 @@ public class RestaurantSystem
                     reserveController.GetAllReserves();
                     break;
                 case "2":
-                    //tableController.GetTableById();
+                    reserveController.GetReservesByClient();
                     break;
                 case "3":
                     //tableController.CreateTable();

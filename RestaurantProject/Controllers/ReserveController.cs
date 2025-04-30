@@ -12,6 +12,7 @@ namespace RestaurantProject.Controllers;
 public class ReserveController
 {
     private readonly IReserveService reserveService = new ReserveService();
+    private readonly IClientService clientService = new ClientService();
 
     public void GetAllReserves()
     {
@@ -30,6 +31,36 @@ public class ReserveController
         foreach (Reserve reserve in reserveList)
         {
             Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status.ToString()}\t{reserve.Client.Name}\t{reserve.Table.Id}");
+        }
+    }
+
+    public void GetReservesByClient()
+    {
+        Console.WriteLine("Ingrese el DNI del cliente");
+        string dni = Console.ReadLine();
+
+        Client client = clientService.GetClientByDni(dni);
+
+        if (client == null)
+        {
+            Console.WriteLine("El cliente con ese DNI no existe.");
+            return;
+        }
+
+        List<Reserve> reservesClient = reserveService.GetReservesByClient(client.Id);
+
+        if (reservesClient.Count == 0)
+        {
+            Console.WriteLine("Este cliente no ha hecho ninguna reserva");
+            return;
+        }
+
+        Console.WriteLine($"Reservas hechas por {client.Name}");
+        Console.WriteLine("Id\tFecha y Hora\tStatus\tMesa");
+
+        foreach (Reserve reserve in reservesClient)
+        {
+            Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status.ToString()}\t{reserve.Table.Id}");
         }
     }
 
