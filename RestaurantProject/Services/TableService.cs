@@ -11,25 +11,25 @@ namespace RestaurantProject.Services;
 
 public class TableService : ITableService
 {
-    private List<Table> _tables = new List<Table>();
+    private List<Table> tablesDB = new List<Table>();
     public void CreateTable(Table table)
     {
-        _tables.Add(table);
+        tablesDB.Add(table);
     }
 
     public List<Table> GetAllTables()
     {
-        return _tables;
+        return tablesDB;
     }
 
     public Table GetTableById(int id)
     {
-        return _tables.FirstOrDefault(t => t.Id == id);
+        return tablesDB.FirstOrDefault(t => t.Id == id);
     }
 
     public List<Table> GetTablesByNumSeats(int numSeats)
     {
-        return _tables.FindAll(t => t.NumSeats >= numSeats);
+        return tablesDB.FindAll(t => t.NumSeats >= numSeats);
     }
 
     public void FillTables()
@@ -59,12 +59,12 @@ public class TableService : ITableService
             NumSeats = 6
         };
 
-        _tables.Add(table1);
-        _tables.Add(table2);
-        _tables.Add(table3);
-        _tables.Add(table4);
-        _tables.Add(table5);
-        _tables.Add(table6);
+        tablesDB.Add(table1);
+        tablesDB.Add(table2);
+        tablesDB.Add(table3);
+        tablesDB.Add(table4);
+        tablesDB.Add(table5);
+        tablesDB.Add(table6);
     }
 
     

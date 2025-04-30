@@ -5,33 +5,38 @@ using System.Text;
 using System.Threading.Tasks;
 using RestaurantProject.Models;
 using RestaurantProject.Models.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RestaurantProject.Services;
 
 public class ReserveService : IReserveService
 {
-    public void CreateReserve(int numSeats, DateTime dateReserve)
+
+    List<Reserve> reservesDB = new List<Reserve>();
+
+    public void CreateReserve(Reserve reserve)
     {
-        throw new NotImplementedException();
+        reservesDB.Add(reserve);
     }
 
     public List<Reserve> GetAllReserves()
     {
-        throw new NotImplementedException();
+        return reservesDB;
     }
 
     public List<Reserve> GetReserveByDate(DateTime date)
     {
-        throw new NotImplementedException();
+        return reservesDB.FindAll(r => r.DateAndHour == date);
     }
 
     public List<Reserve> GetReservesByClient(int clientId)
     {
-        throw new NotImplementedException();
+        return reservesDB.FindAll(r => r.Client.Id == clientId);
     }
 
     public List<Reserve> GetReservesByTable(int tableId)
     {
-        throw new NotImplementedException();
+        return reservesDB.FindAll(r => r.Table.Id == tableId);
     }
+
 }
