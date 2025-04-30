@@ -37,7 +37,7 @@ public class TableController
 
     public void GetTableById()
     {
-        Console.WriteLine("Ingrese el DNI del cliente");
+        Console.WriteLine("Ingrese el N° de mesa");
         int id = Convert.ToInt32(Console.ReadLine());
 
         Table table = tableService.GetTableById(id);
@@ -67,10 +67,10 @@ public class TableController
             return;
         }
 
+        Console.WriteLine("Mesas encontradas");
+        Console.WriteLine("Id\tN° de asientos");
         foreach (Table table in tableList)
         {
-            Console.WriteLine("Mesas encontradas");
-            Console.WriteLine("Id\tN° de asientos");
             Console.WriteLine($"{table.Id}\t{table.NumSeats}");
         }
     }
