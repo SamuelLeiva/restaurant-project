@@ -15,11 +15,6 @@ public class TableController
     //servicio
     private readonly ITableService tableService = new TableService();
 
-    public void FillInitialTables()
-    {
-        tableService.FillTables();
-    }
-
     public void GetAllTables()
     {
         List<Table> tableList = tableService.GetAllTables();
@@ -94,5 +89,10 @@ public class TableController
 
         tableService.CreateTable(newTable);
         Console.WriteLine($"Mesa agregada: N° {newTable.Id}");
+    }
+
+    public void FillInitialTables()
+    {
+        tableService.FillTables();
     }
 }
