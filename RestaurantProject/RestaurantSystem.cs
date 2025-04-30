@@ -76,7 +76,7 @@ public class RestaurantSystem
                     tableController.GetTableById();
                     break;
                 case "3":
-                    //clientController.CreateClient();
+                    tableController.CreateTable();
                     break;
                 case "4":
                     break;

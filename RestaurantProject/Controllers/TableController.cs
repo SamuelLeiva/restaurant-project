@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RestaurantProject.Models;
+using RestaurantProject.Models.Enums;
 using RestaurantProject.Models.Interfaces;
 using RestaurantProject.Services;
 
@@ -56,5 +57,21 @@ public class TableController
         Console.WriteLine("ID\tN° de asientos");
         Console.WriteLine("----------------------------------");
         Console.WriteLine($"{table.Id}\t{table.NumSeats}\n");
+    }
+
+    public void CreateTable()
+    {
+        Console.WriteLine("\nAgregar una nueva mesa:");
+
+        Console.WriteLine("Número de asientos de la mesa: ");
+        int numSeats = Convert.ToInt32(Console.ReadLine());
+
+        var newTable = new Table()
+        {
+            NumSeats = numSeats,
+        };
+
+        tableService.CreateTable(newTable);
+        Console.WriteLine($"Mesa agregada: N° {newTable.Id}");
     }
 }

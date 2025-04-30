@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using RestaurantProject.Models;
@@ -11,9 +12,9 @@ namespace RestaurantProject.Services;
 public class TableService : ITableService
 {
     private List<Table> _tables = new List<Table>();
-    public void CreateTable()
+    public void CreateTable(Table table)
     {
-        throw new NotImplementedException();
+        _tables.Add(table);
     }
 
     public List<Table> GetAllTables()

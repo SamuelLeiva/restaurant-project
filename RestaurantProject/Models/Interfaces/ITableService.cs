@@ -11,6 +11,6 @@ public interface ITableService
     List<Table> GetAllTables();
     List<Table> GetTablesByNumSeats(int numSeats);
     Table GetTableById(int id);
-    void CreateTable();
+    void CreateTable(Table table);
     void FillTables();
 }
