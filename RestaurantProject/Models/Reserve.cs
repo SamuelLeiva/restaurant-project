@@ -21,4 +21,14 @@ public class Reserve
     {
         Id = _nextId++;
     }
+
+    public void AssignClient(Client client)
+    {
+        Client = client;
+    }
+
+    public void AssignTable(Table table)
+    {
+        Table = table;
+    }
 }

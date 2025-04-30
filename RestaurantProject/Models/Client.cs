@@ -20,4 +20,9 @@ public class Client : Person
         Reserves = new List<Reserve>();
         Id = _nextId++;
     }
+
+    public void AddReserve(Reserve reserve)
+    {
+        Reserves.Add(reserve);
+    }
 }
