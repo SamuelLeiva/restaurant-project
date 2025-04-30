@@ -18,6 +18,6 @@ public interface IReserveService
     List<Reserve> GetReservesByTable(int tableId);
 
     //Get reserves by date
-    List<Reserve> GetReserveByDate(DateTime date);
+    List<Reserve> GetReservesByDate(DateTime date);
 
 }

@@ -13,6 +13,7 @@ public class ReserveController
 {
     private readonly IReserveService reserveService = new ReserveService();
     private readonly IClientService clientService = new ClientService();
+    private readonly ITableService tableService = new TableService();
 
     public void GetAllReserves()
     {
@@ -61,6 +62,36 @@ public class ReserveController
         foreach (Reserve reserve in reservesClient)
         {
             Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status.ToString()}\t{reserve.Table.Id}");
+        }
+    }
+
+    public void GetReservesByTable()
+    {
+        Console.WriteLine("Ingrese el N° de mesa: ");
+        int idTable = Convert.ToInt32(Console.ReadLine());
+
+        Table table = tableService.GetTableById(idTable);
+
+        if (table == null)
+        {
+            Console.WriteLine($"La mesa n° {idTable} no existe.");
+            return;
+        }
+
+        List<Reserve> reservesTable = reserveService.GetReservesByTable(idTable);
+
+        if (reservesTable.Count == 0)
+        {
+            Console.WriteLine("Esta mesa no contiene ninguana reserva.");
+            return;
+        }
+
+        Console.WriteLine($"Reservas hechas en la mesa n° {idTable}");
+        Console.WriteLine("Id\tFecha y Hora\tStatus\tCliente");
+
+        foreach (Reserve reserve in reservesTable)
+        {
+            Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status.ToString()}\t{reserve.Client.Name}");
         }
     }
 

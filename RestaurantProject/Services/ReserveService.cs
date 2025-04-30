@@ -24,7 +24,7 @@ public class ReserveService : IReserveService
         return reservesDB;
     }
 
-    public List<Reserve> GetReserveByDate(DateTime date)
+    public List<Reserve> GetReservesByDate(DateTime date)
     {
         return reservesDB.FindAll(r => r.DateAndHour == date);
     }
