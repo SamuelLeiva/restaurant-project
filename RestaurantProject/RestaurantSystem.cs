@@ -98,11 +98,12 @@ public class RestaurantSystem
         bool exit = false;
         while (!exit)
         {
-            Console.WriteLine("========== GESTIÓN DE MESAS ==========");
+            Console.WriteLine("========== GESTIÓN DE RESERVAS ==========");
             Console.WriteLine("1.Ver lista de reservas");
             Console.WriteLine("2.Obtener reservas por cliente");
             Console.WriteLine("3.Obtener reservas por mesa");
-            Console.WriteLine("4.Buscar mesas por número de asientos");
+            Console.WriteLine("4.Obtener reservas por fecha");
+            Console.WriteLine("5.Crear una nueva reserva");
             Console.WriteLine("0.Atrás");
 
             option = Console.ReadLine();
@@ -119,7 +120,7 @@ public class RestaurantSystem
                     reserveController.GetReservesByTable();
                     break;
                 case "4":
-                    //tableController.GetTablesByNumSeats();
+                    reserveController.GetReservesByDate();
                     break;
                 case "0":
                     exit = true;

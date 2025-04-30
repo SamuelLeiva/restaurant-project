@@ -95,5 +95,34 @@ public class ReserveController
         }
     }
 
+    public void GetReservesByDate()
+    {
+        Console.WriteLine("\nIngrese el día de la reserva");
+        int day = Convert.ToInt32(Console.ReadLine());
 
+        Console.WriteLine("Ingrese el mes de la reserva");
+        int month = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("Ingrese el año de la reserva");
+        int year = Convert.ToInt32(Console.ReadLine());
+
+        DateTime fullDate = new DateTime(year, month, day);
+
+        List<Reserve> reserveList = reserveService.GetReservesByDate(fullDate);
+
+        if (reserveList.Count == 0)
+        {
+            Console.WriteLine("No hay ninguna reserva hecha para ese día");
+            return;
+        }
+
+        Console.WriteLine($"Lista de reservas del {day}/{month}/{year}");
+        Console.WriteLine("ID\tFecha y Hora\tStatus\tCliente\tMesa");
+        Console.WriteLine("---------------------------------------------");
+
+        foreach (Reserve reserve in reserveList)
+        {
+            Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status.ToString()}\t{reserve.Client.Name}\t{reserve.Table.Id}");
+        }
+    }
 }
