@@ -8,15 +8,15 @@ namespace RestaurantProject.Models.Interfaces;
 
 public interface IReserveService
 {
-    void GetAllReserves();
-    void CreateReserve();
+    List<Reserve> GetAllReserves();
+    void CreateReserve(int numSeats, DateTime dateReserve);
 
     //Get reserves by client
-    void GetReservesByClient(int clientId);
+    List<Reserve> GetReservesByClient(int clientId);
 
     //Get reserves by table
-    void GetReservesByTable(int tableId);
+    List<Reserve> GetReservesByTable(int tableId);
 
     //Get reserves by date
-    void GetReserveByDate(DateTime date);
+    List<Reserve> GetReserveByDate(DateTime date);
 }

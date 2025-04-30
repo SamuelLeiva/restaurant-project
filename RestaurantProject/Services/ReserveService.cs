@@ -3,33 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RestaurantProject.Models;
 using RestaurantProject.Models.Interfaces;
 
 namespace RestaurantProject.Services;
 
 public class ReserveService : IReserveService
 {
-    public void CreateReserve()
+    public void CreateReserve(int numSeats, DateTime dateReserve)
     {
         throw new NotImplementedException();
     }
 
-    public void GetAllReserves()
+    public List<Reserve> GetAllReserves()
     {
         throw new NotImplementedException();
     }
 
-    public void GetReserveByDate(DateTime date)
+    public List<Reserve> GetReserveByDate(DateTime date)
     {
         throw new NotImplementedException();
     }
 
-    public void GetReservesByClient(int clientId)
+    public List<Reserve> GetReservesByClient(int clientId)
     {
         throw new NotImplementedException();
     }
 
-    public void GetReservesByTable(int tableId)
+    public List<Reserve> GetReservesByTable(int tableId)
     {
         throw new NotImplementedException();
     }
