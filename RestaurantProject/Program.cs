@@ -33,7 +33,7 @@ internal class Program
                         restaurantSystem.TableManagement();
                         break;
                     case "3":
-                        //ReserveManagement();
+                        restaurantSystem.ReserveManagement();
                         break;
                     case "0":
                         exit = true;
