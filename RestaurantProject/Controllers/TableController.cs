@@ -13,11 +13,11 @@ namespace RestaurantProject.Controllers;
 public class TableController
 {
     //servicio
-    private readonly ITableService tableService = new TableService();
+    //private readonly ITableService tableService = new TableService();
 
     public void GetAllTables()
     {
-        List<Table> tableList = tableService.GetAllTables();
+        List<Table> tableList = TableService.Instance.GetAllTables();
 
         if (tableList.Count == 0)
         {
@@ -40,7 +40,7 @@ public class TableController
         Console.WriteLine("Ingrese el N° de mesa");
         int id = Convert.ToInt32(Console.ReadLine());
 
-        Table table = tableService.GetTableById(id);
+        Table table = TableService.Instance.GetTableById(id);
 
         if (table == null)
         {
@@ -59,7 +59,7 @@ public class TableController
         Console.WriteLine("Ingrese el n° de asientos que necesita");
         int numSeats = Convert.ToInt32(Console.ReadLine());
 
-        List<Table> tableList = tableService.GetTablesByNumSeats(numSeats);
+        List<Table> tableList = TableService.Instance.GetTablesByNumSeats(numSeats);
 
         if (tableList.Count == 0)
         {
@@ -87,12 +87,12 @@ public class TableController
             NumSeats = numSeats,
         };
 
-        tableService.CreateTable(newTable);
+        TableService.Instance.CreateTable(newTable);
         Console.WriteLine($"Mesa agregada: N° {newTable.Id}");
     }
 
     public void FillInitialTables()
     {
-        tableService.FillTables();
+        TableService.Instance.FillTables();
     }
 }

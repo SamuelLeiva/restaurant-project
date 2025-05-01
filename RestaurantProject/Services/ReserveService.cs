@@ -5,14 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 using RestaurantProject.Models;
 using RestaurantProject.Models.Interfaces;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RestaurantProject.Services;
 
 public class ReserveService : IReserveService
 {
+    private static ReserveService _instance;
+    private static readonly object _lock = new object();
 
     List<Reserve> reservesDB = new List<Reserve>();
+
+    private ReserveService() { }
+
+    public static ReserveService Instance
+    {
+        get
+        {
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new ReserveService();
+                }
+                return _instance;
+            }
+        }
+    }
 
     public void CreateReserve(Reserve reserve)
     {

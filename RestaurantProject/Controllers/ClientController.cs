@@ -13,7 +13,7 @@ namespace RestaurantProject.Controllers;
 public class ClientController
 {
     //servicios
-    private readonly IClientService clientService = new ClientService();
+    //private readonly IClientService clientService = new ClientService();
     public void CreateClient()
     {
         Console.WriteLine("\nAgregar un nuevo cliente:");
@@ -42,13 +42,13 @@ public class ClientController
             Age = age
         };
 
-        clientService.CreateClient(newClient);
+        ClientService.Instance.CreateClient(newClient);
         Console.WriteLine($"Cliente agregado: {newClient.Name}");
     }
 
     public void GetAllClients()
     {
-        var listClients = clientService.GetAllClients();
+        var listClients = ClientService.Instance.GetAllClients();
         if (listClients.Count == 0)
         {
             Console.WriteLine("No hay ningún cliente");
@@ -69,7 +69,7 @@ public class ClientController
         Console.WriteLine("Ingrese el DNI del cliente");
         string dni = Console.ReadLine();
 
-        Client client = clientService.GetClientByDni(dni);
+        Client client = ClientService.Instance.GetClientByDni(dni);
 
         if (client == null)
         {
@@ -85,6 +85,6 @@ public class ClientController
 
     public void FillInitialClients()
     {
-        clientService.FillClients();
+        ClientService.Instance.FillClients();
     }
 }

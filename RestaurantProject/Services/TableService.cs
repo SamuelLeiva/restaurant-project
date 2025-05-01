@@ -11,7 +11,29 @@ namespace RestaurantProject.Services;
 
 public class TableService : ITableService
 {
+    private static TableService _instance;
+    private static readonly object _lock = new object();
+
     private List<Table> tablesDB = new List<Table>();
+
+    private TableService() { }
+
+    public static TableService Instance
+    {
+        get
+        {
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new TableService();
+                }
+                return _instance;
+            }
+        }
+    }
+
+    
     public void CreateTable(Table table)
     {
         tablesDB.Add(table);

@@ -12,13 +12,13 @@ namespace RestaurantProject.Controllers;
 
 public class ReserveController
 {
-    private readonly IReserveService reserveService = new ReserveService();
-    private readonly IClientService clientService = new ClientService();
-    private readonly ITableService tableService = new TableService();
+    //private readonly IReserveService reserveService = new ReserveService();
+    //private readonly IClientService clientService = new ClientService();
+    //private readonly ITableService tableService = new TableService();
 
     public void GetAllReserves()
     {
-        List<Reserve> reserveList = reserveService.GetAllReserves();
+        List<Reserve> reserveList = ReserveService.Instance.GetAllReserves();
 
         if (reserveList.Count == 0)
         {
@@ -41,7 +41,7 @@ public class ReserveController
         Console.WriteLine("Ingrese el DNI del cliente");
         string dni = Console.ReadLine();
 
-        Client client = clientService.GetClientByDni(dni);
+        Client client = ClientService.Instance.GetClientByDni(dni);
 
         if (client == null)
         {
@@ -49,7 +49,7 @@ public class ReserveController
             return;
         }
 
-        List<Reserve> reservesClient = reserveService.GetReservesByClient(client.Id);
+        List<Reserve> reservesClient = ReserveService.Instance.GetReservesByClient(client.Id);
 
         if (reservesClient.Count == 0)
         {
@@ -71,7 +71,7 @@ public class ReserveController
         Console.WriteLine("Ingrese el N° de mesa: ");
         int idTable = Convert.ToInt32(Console.ReadLine());
 
-        Table table = tableService.GetTableById(idTable);
+        Table table = TableService.Instance.GetTableById(idTable);
 
         if (table == null)
         {
@@ -79,7 +79,7 @@ public class ReserveController
             return;
         }
 
-        List<Reserve> reservesTable = reserveService.GetReservesByTable(idTable);
+        List<Reserve> reservesTable = ReserveService.Instance.GetReservesByTable(idTable);
 
         if (reservesTable.Count == 0)
         {
@@ -109,7 +109,7 @@ public class ReserveController
 
         DateTime fullDate = new DateTime(year, month, day);
 
-        List<Reserve> reserveList = reserveService.GetReservesByDate(fullDate);
+        List<Reserve> reserveList = ReserveService.Instance.GetReservesByDate(fullDate);
 
         if (reserveList.Count == 0)
         {
@@ -167,7 +167,7 @@ public class ReserveController
         }
 
         // Buscar cliente
-        Client foundClient = clientService.GetClientByDni("65559948");
+        Client foundClient = ClientService.Instance.GetClientByDni("65559948");
         if (foundClient == null)
         {
             Console.WriteLine("Cliente no encontrado.");
@@ -175,7 +175,7 @@ public class ReserveController
         }
 
         // Buscar mesa
-        Table foundTable = tableService.GetTableById(1);
+        Table foundTable = TableService.Instance.GetTableById(1);
         if (foundTable == null)
         {
             Console.WriteLine("Mesa no encontrada.");
@@ -191,7 +191,7 @@ public class ReserveController
             ReserveClient = foundClient
         };
 
-        reserveService.CreateReserve(newReserve);
+        ReserveService.Instance.CreateReserve(newReserve);
         Console.WriteLine("Reserva creada exitosamente.");
     }
 }

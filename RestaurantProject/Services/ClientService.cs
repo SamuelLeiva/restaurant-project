@@ -13,7 +13,27 @@ namespace RestaurantProject.Services;
 
 public class ClientService : IClientService
 {
+    private static ClientService _instance;
+    private static readonly object _lock = new object();
+
     private List<Client> clientsDB = new List<Client>();
+
+    private ClientService() { }
+
+    public static ClientService Instance
+    {
+        get
+        {
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new ClientService();
+                }
+                return _instance;
+            }
+        }
+    }
 
     public void CreateClient(Client newClient)
     {
