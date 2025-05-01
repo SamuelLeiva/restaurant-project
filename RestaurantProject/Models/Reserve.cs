@@ -14,8 +14,8 @@ public class Reserve
     public int Id { get; private set; }
     public DateTime DateAndHour { get; set; }
     public ReserveStatus Status { get; set; }
-    public Client Client { get; set; }
-    public Table Table { get; set; }
+    public Client ReserveClient { get; set; }
+    public Table ReserveTable { get; set; }
 
     public Reserve() 
     {
@@ -24,11 +24,11 @@ public class Reserve
 
     public void AssignClient(Client client)
     {
-        Client = client;
+        ReserveClient = client;
     }
 
     public void AssignTable(Table table)
     {
-        Table = table;
+        ReserveTable = table;
     }
 }

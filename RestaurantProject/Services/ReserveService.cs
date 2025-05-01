@@ -31,16 +31,16 @@ public class ReserveService : IReserveService
 
     public List<Reserve> GetReservesByClient(int clientId)
     {
-        return reservesDB.FindAll(r => r.Client.Id == clientId);
+        return reservesDB.FindAll(r => r.ReserveClient.Id == clientId);
     }
 
     public List<Reserve> GetReservesByTable(int tableId)
     {
-        return reservesDB.FindAll(r => r.Table.Id == tableId);
+        return reservesDB.FindAll(r => r.ReserveTable.Id == tableId);
     }
 
     public Reserve GetReserveByTableAndDate(int tableId, DateTime date)
     {
-        return reservesDB.FirstOrDefault(r => r.Table.Id == tableId && r.DateAndHour == date);
+        return reservesDB.FirstOrDefault(r => r.ReserveTable.Id == tableId && r.DateAndHour == date);
     }
 }

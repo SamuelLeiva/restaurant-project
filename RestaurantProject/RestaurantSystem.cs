@@ -123,7 +123,7 @@ public class RestaurantSystem
                     reserveController.GetReservesByDate();
                     break;
                 case "5":
-                    //reserveController.CreateReserve();
+                    reserveController.CreateReserve();
                     break;
                 case "0":
                     exit = true;
