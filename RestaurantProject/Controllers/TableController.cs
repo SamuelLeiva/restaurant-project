@@ -14,82 +14,97 @@ public class TableController
 { 
     public void GetAllTables()
     {
-        List<Table> tableList = TableService.Instance.GetAllTables();
+        var tables = TableService.Instance.GetAllTables();
 
-        if (tableList.Count == 0)
+        if (!tables.Any())
         {
             Console.WriteLine("No hay ninguna mesa");
             return;
         }
 
-        Console.WriteLine("Lista de Mesas");
-        Console.WriteLine("ID\tN° de asientos");
-        Console.WriteLine("----------------------------------");
+        PrintTableHeader("Lista de Mesas");
 
-        foreach (Table table in tableList)
-        {
-            Console.WriteLine($"{table.Id}\t{table.NumSeats}");
-        }
+        PrintTables(tables);
     }
 
     public void GetTableById()
     {
-        Console.WriteLine("Ingrese el N° de mesa");
-        int id = Convert.ToInt32(Console.ReadLine());
+        int id = ReadInt("Ingrese el N° de mesa");
 
-        Table table = TableService.Instance.GetTableById(id);
+        var table = TableService.Instance.GetTableById(id);
 
-        if (table == null)
+        if (table is null)
         {
-            Console.WriteLine("Mesa con ese id no existe.");
+            Console.WriteLine("Mesa con ese Id no existe.");
             return;
         }
 
-        Console.WriteLine("Mesa encontrada");
-        Console.WriteLine("ID\tN° de asientos");
-        Console.WriteLine("----------------------------------");
-        Console.WriteLine($"{table.Id}\t{table.NumSeats}\n");
+        PrintTableHeader("Mesa encontrada");
+        PrintTable(table);
     }
 
     public void GetTablesByNumSeats()
     {
-        Console.WriteLine("Ingrese el n° de asientos que necesita");
-        int numSeats = Convert.ToInt32(Console.ReadLine());
+        int minSeats = ReadInt("Ingrese el número mínimo de asientos: ");
 
-        List<Table> tableList = TableService.Instance.GetTablesByNumSeats(numSeats);
+        var tables = TableService.Instance.GetTablesByNumSeats(minSeats);
 
-        if (tableList.Count == 0)
+        if (!tables.Any())
         {
-            Console.WriteLine($"No se encontraron mesas con mínimo {numSeats} asientos.");
+            Console.WriteLine($"No se encontraron mesas con al menos {minSeats} asientos.");
             return;
         }
 
-        Console.WriteLine("Mesas encontradas");
-        Console.WriteLine("Id\tN° de asientos");
-        foreach (Table table in tableList)
-        {
-            Console.WriteLine($"{table.Id}\t{table.NumSeats}");
-        }
+        PrintTableHeader("Mesas encontradas");
+        PrintTables(tables);
     }
 
     public void CreateTable()
     {
         Console.WriteLine("\nAgregar una nueva mesa:");
 
-        Console.WriteLine("Número de asientos de la mesa: ");
-        int numSeats = Convert.ToInt32(Console.ReadLine());
+        int seats = ReadInt("Número de asientos de la mesa: ");
 
-        var newTable = new Table()
-        {
-            NumSeats = numSeats,
-        };
+        var table = new Table { NumSeats = seats };
+        TableService.Instance.CreateTable(table);
 
-        TableService.Instance.CreateTable(newTable);
-        Console.WriteLine($"Mesa agregada: N° {newTable.Id}");
+        Console.WriteLine($"Mesa agregada: ID {table.Id}, Asientos {table.NumSeats}");
     }
 
     public void FillInitialTables()
     {
         TableService.Instance.FillTables();
+    }
+
+    //métodos auxiliares
+    private int ReadInt(string message)
+    {
+        Console.Write(message);
+        int result;
+        while (!int.TryParse(Console.ReadLine(), out result))
+        {
+            Console.Write("Entrada inválida. Intente nuevamente: ");
+        }
+        return result;
+    }
+
+    private void PrintTableHeader(string title)
+    {
+        Console.WriteLine($"\n{title}");
+        Console.WriteLine("ID\tN° de asientos");
+        Console.WriteLine("----------------------------------");
+    }
+
+    private void PrintTable(Table table)
+    {
+        Console.WriteLine($"{table.Id}\t{table.NumSeats}");
+    }
+
+    private void PrintTables(IEnumerable<Table> tables)
+    {
+        foreach (var table in tables)
+        {
+            PrintTable(table);
+        }
     }
 }
