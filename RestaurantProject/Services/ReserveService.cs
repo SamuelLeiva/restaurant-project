@@ -10,10 +10,10 @@ namespace RestaurantProject.Services;
 
 public class ReserveService : IReserveService
 {
-    private static ReserveService _instance;
+    private static ReserveService? _instance;
     private static readonly object _lock = new object();
 
-    List<Reserve> reservesDB = new List<Reserve>();
+    private readonly List<Reserve> _reserves = new List<Reserve>();
 
     private ReserveService() { }
 
@@ -34,34 +34,41 @@ public class ReserveService : IReserveService
 
     public void CreateReserve(Reserve reserve)
     {
-        reservesDB.Add(reserve);
+        _reserves.Add(reserve);
     }
 
     public List<Reserve> GetAllReserves()
     {
-        return reservesDB;
+        return _reserves;
     }
 
     public List<Reserve> GetReservesByDate(DateTime date)
     {
-        return reservesDB.FindAll(r => r.DateAndHour.Year == date.Year
-        && r.DateAndHour.Month == date.Month
-        && r.DateAndHour.Day == date.Day);
+        return _reserves.Where(
+            r => r.DateAndHour.Year == date.Year
+            && r.DateAndHour.Month == date.Month
+            && r.DateAndHour.Day == date.Day)
+            .ToList();
     }
 
     public List<Reserve> GetReservesByClient(int clientId)
     {
-        return reservesDB.FindAll(r => r.ReserveClient.Id == clientId);
+        return _reserves.Where(
+            r => r.ReserveClient.Id == clientId)
+            .ToList();
     }
 
     public List<Reserve> GetReservesByTable(int tableId)
     {
-        return reservesDB.FindAll(r => r.ReserveTable.Id == tableId);
+        return _reserves
+            .Where(r => r.ReserveTable.Id == tableId)
+            .ToList();
     }
 
-    public Reserve GetReserveByTableAndDate(int tableId, DateTime date)
+    public Reserve? GetReserveByTableAndDate(int tableId, DateTime date)
     {
-        return reservesDB.FirstOrDefault(r => r.ReserveTable.Id == tableId
+        return _reserves.FirstOrDefault(r => 
+        r.ReserveTable.Id == tableId
         && r.DateAndHour.Year == date.Year
         && r.DateAndHour.Month == date.Month
         && r.DateAndHour.Day == date.Day
