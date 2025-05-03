@@ -11,10 +11,7 @@ using RestaurantProject.Services;
 namespace RestaurantProject.Controllers;
 
 public class TableController
-{
-    //servicio
-    //private readonly ITableService tableService = new TableService();
-
+{ 
     public void GetAllTables()
     {
         List<Table> tableList = TableService.Instance.GetAllTables();

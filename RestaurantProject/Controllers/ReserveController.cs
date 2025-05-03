@@ -12,10 +12,6 @@ namespace RestaurantProject.Controllers;
 
 public class ReserveController
 {
-    //private readonly IReserveService reserveService = new ReserveService();
-    //private readonly IClientService clientService = new ClientService();
-    //private readonly ITableService tableService = new TableService();
-
     public void GetAllReserves()
     {
         List<Reserve> reserveList = ReserveService.Instance.GetAllReserves();
@@ -130,13 +126,60 @@ public class ReserveController
     public void CreateReserve()
     {
         Console.WriteLine("\n=== Crear nueva reserva ===");
-        // ingresar el n° de asientos
-        //Console.WriteLine("Ingrese el n° de asientos deseados:");
-        //if (!int.TryParse(Console.ReadLine(), out int numSeats) || numSeats <= 0)
-        //{
-        //    Console.WriteLine("Número de asientos inválido.");
-        //    return;
-        //}
+        Console.WriteLine("Ingrese el n° de asientos deseados:");
+        if (!int.TryParse(Console.ReadLine(), out int numSeats) || numSeats <= 0)
+        {
+            Console.WriteLine("Número de asientos inválido.");
+            return;
+        }
+
+        //obtenemos mesas con ese n° de asientos
+        List<Table> tableList = TableService.Instance.GetTablesByNumSeats(numSeats);
+
+        Console.WriteLine("\nMesas disponibles: ");
+        Console.WriteLine("ID\tN° de asientos");
+
+        foreach (Table table in tableList)
+        {
+            Console.WriteLine($"{table.Id}\t{table.NumSeats}");
+        }
+
+        Console.WriteLine("Elija una de las mesas");
+        int numTable = Convert.ToInt32(Console.ReadLine());
+
+        Table foundTable = TableService.Instance.GetTableById(numTable);
+
+        //Datos del cliente
+        Console.WriteLine("\nDatos del cliente");
+        Console.WriteLine("Nombre del cliente: ");
+        string name = Console.ReadLine();
+
+        Console.WriteLine("DNI del cliente");
+        string dni = Console.ReadLine();
+
+        Console.WriteLine("Género del cliente (0:Masculino, 1:Femenino): ");
+        Genre genre = (Genre)Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("Dirección del cliente");
+        string adress = Console.ReadLine();
+
+        Console.WriteLine("Edad del cliente");
+        int age = Convert.ToInt32(Console.ReadLine());
+
+        if (ClientService.Instance.GetClientByDni(dni) == null)
+        {
+            var newClient = new Client()
+            {
+                Name = name,
+                Genre = genre,
+                Dni = dni,
+                Address = adress,
+                Age = age
+            };
+
+            ClientService.Instance.CreateClient(newClient);
+            Console.WriteLine("\nCliente nuevo agregado a la base de datos.");
+        }
 
         // Ingresar la fecha
         Console.WriteLine("Ingrese el día de la reserva:");
@@ -155,30 +198,17 @@ public class ReserveController
 
         int year = DateTime.Now.Year;
 
+        Console.WriteLine("\nIngrese la hora de la reserva:");
+        int hour = Convert.ToInt32(Console.ReadLine());
+
         DateTime date;
         try
         {
-            date = new DateTime(year, month, day);
+            date = new DateTime(year, month, day, hour, 0, 0);
         }
         catch (Exception)
         {
             Console.WriteLine("Fecha inválida.");
-            return;
-        }
-
-        // Buscar cliente
-        Client foundClient = ClientService.Instance.GetClientByDni("65559948");
-        if (foundClient == null)
-        {
-            Console.WriteLine("Cliente no encontrado.");
-            return;
-        }
-
-        // Buscar mesa
-        Table foundTable = TableService.Instance.GetTableById(1);
-        if (foundTable == null)
-        {
-            Console.WriteLine("Mesa no encontrada.");
             return;
         }
 
@@ -188,7 +218,7 @@ public class ReserveController
             DateAndHour = date,
             Status = ReserveStatus.ACTIVO,
             ReserveTable = foundTable,
-            ReserveClient = foundClient
+            ReserveClient = ClientService.Instance.GetClientByDni(dni)
         };
 
         ReserveService.Instance.CreateReserve(newReserve);

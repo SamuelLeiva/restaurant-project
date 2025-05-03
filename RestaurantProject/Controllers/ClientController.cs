@@ -12,8 +12,6 @@ namespace RestaurantProject.Controllers;
 
 public class ClientController
 {
-    //servicios
-    //private readonly IClientService clientService = new ClientService();
     public void CreateClient()
     {
         Console.WriteLine("\nAgregar un nuevo cliente:");
