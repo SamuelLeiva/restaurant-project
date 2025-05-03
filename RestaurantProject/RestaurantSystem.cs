@@ -143,6 +143,8 @@ public class RestaurantSystem
         //agregar clientes
         clientController.FillInitialClients();
 
+        //agregar reservas
+        reserveController.FillInitialReserves();
     }
 }
 

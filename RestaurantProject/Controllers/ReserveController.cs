@@ -224,4 +224,32 @@ public class ReserveController
         ReserveService.Instance.CreateReserve(newReserve);
         Console.WriteLine("Reserva creada exitosamente.");
     }
+
+    public void FillInitialReserves()
+    {
+        Client client1 = ClientService.Instance.GetClientByDni("78874956");
+        Client client2 = ClientService.Instance.GetClientByDni("65559948");
+
+        Table table1 = TableService.Instance.GetTableById(1);
+        Table table2 = TableService.Instance.GetTableById(2);
+
+        var newReserve1 = new Reserve()
+        {
+            ReserveClient = client1,
+            ReserveTable = table1,
+            Status = ReserveStatus.ACTIVO,
+            DateAndHour = new DateTime(2025, 5, 20, 18, 0, 0)
+        };
+
+        var newReserve2 = new Reserve()
+        {
+            ReserveClient = client2,
+            ReserveTable = table2,
+            Status = ReserveStatus.ACTIVO,
+            DateAndHour = new DateTime(2025, 5, 21, 15, 0, 0)
+        };
+
+        ReserveService.Instance.CreateReserve(newReserve1);
+        ReserveService.Instance.CreateReserve(newReserve2);
+    }
 }
