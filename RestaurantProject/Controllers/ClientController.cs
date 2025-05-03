@@ -16,27 +16,18 @@ public class ClientController
     {
         Console.WriteLine("\nAgregar un nuevo cliente:");
 
-        Console.WriteLine("Nombre del cliente: ");
-        string name = Console.ReadLine();
-
-        Console.WriteLine("Género del cliente (0:Masculino, 1:Femenino): ");
-        Genre genre = (Genre)Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine("DNI del cliente");
-        string dni = Console.ReadLine();
-
-        Console.WriteLine("Dirección del cliente");
-        string adress = Console.ReadLine();
-
-        Console.WriteLine("Edad del cliente");
-        int age = Convert.ToInt32(Console.ReadLine());
+        string name = ReadString("Nombre del cliente: ");
+        Genre genre = (Genre)ReadInt("Género del cliente (0:Masculino, 1:Femenino): ");
+        string dni = ReadString("DNI del cliente:");
+        string address = ReadString("Dirección del cliente:");
+        int age = ReadInt("Edad del cliente:");
 
         var newClient = new Client()
         {
             Name = name,
             Genre = genre,
             Dni = dni,
-            Address = adress,
+            Address = address,
             Age = age
         };
 
@@ -46,43 +37,71 @@ public class ClientController
 
     public void GetAllClients()
     {
-        var listClients = ClientService.Instance.GetAllClients();
-        if (listClients.Count == 0)
+        var clients = ClientService.Instance.GetAllClients();
+
+        if (!clients.Any())
         {
-            Console.WriteLine("No hay ningún cliente");
+            Console.WriteLine("No hay ningún cliente registrado.");
             return;
         }
 
-        Console.WriteLine("Lista de Clientes");
-        Console.WriteLine("ID\tNombre\tDNI\tDirección\tEdad");
-        Console.WriteLine("----------------------------------");
-        foreach (Client client in listClients)
+        Console.WriteLine("\n=== Lista de Clientes ===");
+        PrintClientHeader();
+
+        foreach (var client in clients)
         {
-            Console.WriteLine($"{client.Id}\t{client.Name}\t{client.Dni}\t{client.Address}\t\t{client.Age}");
+            PrintClient(client);
         }
     }
 
     public void GetClientByDni()
     {
-        Console.WriteLine("Ingrese el DNI del cliente");
-        string dni = Console.ReadLine();
+        string dni = ReadString("Ingrese el DNI del cliente:");
 
-        Client client = ClientService.Instance.GetClientByDni(dni);
+        var client = ClientService.Instance.GetClientByDni(dni);
 
         if (client == null)
         {
-            Console.WriteLine("Cliente no existe.");
+            Console.WriteLine("Cliente no encontrado.");
             return;
         }
 
-        Console.WriteLine("Cliente encontrado");
-        Console.WriteLine("ID\tNombre\tDNI\tDirección\tEdad");
-        Console.WriteLine("----------------------------------");
-        Console.WriteLine($"{client.Id}\t{client.Name}\t{client.Dni}\t{client.Address}\t{client.Age}\n");
+        Console.WriteLine("\n=== Cliente encontrado ===");
+        PrintClientHeader();
+        PrintClient(client);
     }
 
     public void FillInitialClients()
     {
         ClientService.Instance.FillClients();
+    }
+
+    //Métodos auxiliares
+    private string ReadString(string message)
+    {
+        Console.Write(message + " ");
+        return Console.ReadLine() ?? string.Empty;
+    }
+
+    private int ReadInt(string message)
+    {
+        Console.Write(message);
+        int result;
+        while (!int.TryParse(Console.ReadLine(), out result))
+        {
+            Console.Write("Entrada inválida. Intente nuevamente: ");
+        }
+        return result;
+    }
+
+    private void PrintClientHeader()
+    {
+        Console.WriteLine("ID\tNombre\t\tDNI\t\tDirección\t\tEdad");
+        Console.WriteLine("--------------------------------------------------------------");
+    }
+
+    private void PrintClient(Client client)
+    {
+        Console.WriteLine($"{client.Id}\t{client.Name}\t{client.Dni}\t{client.Address}\t{client.Age}");
     }
 }

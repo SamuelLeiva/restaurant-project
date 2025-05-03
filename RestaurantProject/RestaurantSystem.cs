@@ -13,7 +13,6 @@ namespace RestaurantProject;
 public class RestaurantSystem
 {
 
-    //servicios
     private readonly ClientController clientController = new ClientController();
     private readonly TableController tableController = new TableController();
     private readonly ReserveController reserveController = new ReserveController();
