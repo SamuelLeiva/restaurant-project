@@ -11,10 +11,10 @@ namespace RestaurantProject.Services;
 
 public class TableService : ITableService
 {
-    private static TableService _instance;
+    private static TableService? _instance;
     private static readonly object _lock = new object();
 
-    private List<Table> tablesDB = new List<Table>();
+    private readonly List<Table> _tables = new List<Table>();
 
     private TableService() { }
 
@@ -36,58 +36,31 @@ public class TableService : ITableService
     
     public void CreateTable(Table table)
     {
-        tablesDB.Add(table);
+        _tables.Add(table);
     }
 
     public List<Table> GetAllTables()
     {
-        return tablesDB;
+        return _tables;
     }
 
     public Table GetTableById(int id)
     {
-        return tablesDB.FirstOrDefault(t => t.Id == id);
+        return _tables.FirstOrDefault(t => t.Id == id);
     }
 
-    public List<Table> GetTablesByNumSeats(int numSeats)
+    public List<Table> GetTablesByNumSeats(int minSeats)
     {
-        return tablesDB.FindAll(t => t.NumSeats >= numSeats);
+        return _tables.Where(t => t.NumSeats >= minSeats).ToList();
     }
 
     public void FillTables()
     {
-        Table table1 = new Table()
-        {
-            NumSeats = 2
-        };
-        Table table2 = new Table()
-        {
-            NumSeats = 2
-        };
-        Table table3 = new Table()
-        {
-            NumSeats = 4
-        };
-        Table table4 = new Table()
-        {
-            NumSeats = 4
-        };
-        Table table5 = new Table()
-        {
-            NumSeats = 6
-        };
-        Table table6 = new Table()
-        {
-            NumSeats = 6
-        };
+        var seatCounts = new[] { 2, 2, 4, 4, 6, 6 };
 
-        tablesDB.Add(table1);
-        tablesDB.Add(table2);
-        tablesDB.Add(table3);
-        tablesDB.Add(table4);
-        tablesDB.Add(table5);
-        tablesDB.Add(table6);
+        foreach (var seats in seatCounts)
+        {
+            _tables.Add(new Table { NumSeats = seats });
+        }
     }
-
-    
 }
