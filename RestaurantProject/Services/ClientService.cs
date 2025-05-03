@@ -13,10 +13,10 @@ namespace RestaurantProject.Services;
 
 public class ClientService : IClientService
 {
-    private static ClientService _instance;
+    private static ClientService? _instance;
     private static readonly object _lock = new object();
 
-    private List<Client> clientsDB = new List<Client>();
+    private readonly List<Client> _clients = new List<Client>();
 
     private ClientService() { }
 
@@ -35,19 +35,19 @@ public class ClientService : IClientService
         }
     }
 
-    public void CreateClient(Client newClient)
+    public void CreateClient(Client client)
     {
-        clientsDB.Add(newClient);
+        _clients.Add(client);
     }
-    public Client GetClientByDni(string dni)
+    public Client? GetClientByDni(string dni)
     {
-        return clientsDB.FirstOrDefault(c => c.Dni == dni);
+        return _clients.FirstOrDefault(c => c.Dni == dni);
     }
 
 
     public List<Client> GetAllClients()
     {
-        return clientsDB;
+        return _clients;
     }
 
     public void FillClients()
@@ -70,8 +70,8 @@ public class ClientService : IClientService
             Age = 27
         };
 
-        clientsDB.Add(client1);
-        clientsDB.Add(client2);
+        _clients.Add(client1);
+        _clients.Add(client2);
     }
 
     
