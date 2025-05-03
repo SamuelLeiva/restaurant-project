@@ -59,6 +59,10 @@ public class ReserveService : IReserveService
 
     public Reserve GetReserveByTableAndDate(int tableId, DateTime date)
     {
-        return reservesDB.FirstOrDefault(r => r.ReserveTable.Id == tableId && r.DateAndHour == date);
+        return reservesDB.FirstOrDefault(r => r.ReserveTable.Id == tableId 
+        && r.DateAndHour.Year == date.Year 
+        && r.DateAndHour.Month == date.Month
+        && r.DateAndHour.Day == date.Day
+        && r.DateAndHour.Hour == date.Hour);
     }
 }

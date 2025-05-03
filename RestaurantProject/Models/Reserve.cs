@@ -22,13 +22,4 @@ public class Reserve
         Id = _nextId++;
     }
 
-    public void AssignClient(Client client)
-    {
-        ReserveClient = client;
-    }
-
-    public void AssignTable(Table table)
-    {
-        ReserveTable = table;
-    }
 }

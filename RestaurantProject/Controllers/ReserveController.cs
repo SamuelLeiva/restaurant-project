@@ -123,6 +123,25 @@ public class ReserveController
         }
     }
 
+    //public void GetReserveByTableAndDate()
+    //{
+    //    Console.WriteLine("Ingrese el N° de mesa: ");
+    //    int idTable = Convert.ToInt32(Console.ReadLine());
+
+    //    Console.WriteLine("\nIngrese el día de la reserva");
+    //    int day = Convert.ToInt32(Console.ReadLine());
+
+    //    Console.WriteLine("Ingrese el mes de la reserva");
+    //    int month = Convert.ToInt32(Console.ReadLine());
+
+    //    Console.WriteLine("Ingrese el año de la reserva");
+    //    int year = Convert.ToInt32(Console.ReadLine());
+
+    //    DateTime fullDate = new DateTime(year, month, day);
+
+    //    Reserve foundReserve = ReserveService.Instance.GetReserveByTableAndDate(idTable, fullDate);
+    //}
+
     public void CreateReserve()
     {
         Console.WriteLine("\n=== Crear nueva reserva ===");
@@ -166,20 +185,7 @@ public class ReserveController
         Console.WriteLine("Edad del cliente");
         int age = Convert.ToInt32(Console.ReadLine());
 
-        if (ClientService.Instance.GetClientByDni(dni) == null)
-        {
-            var newClient = new Client()
-            {
-                Name = name,
-                Genre = genre,
-                Dni = dni,
-                Address = adress,
-                Age = age
-            };
-
-            ClientService.Instance.CreateClient(newClient);
-            Console.WriteLine("\nCliente nuevo agregado a la base de datos.");
-        }
+        
 
         // Ingresar la fecha
         Console.WriteLine("Ingrese el día de la reserva:");
@@ -210,6 +216,30 @@ public class ReserveController
         {
             Console.WriteLine("Fecha inválida.");
             return;
+        }
+
+        //verificar si foundTable tiene una reserva a la misma fecha y hora
+        Reserve reserve = ReserveService.Instance.GetReserveByTableAndDate(foundTable.Id, date);
+
+        if (reserve != null) {
+            Console.WriteLine("Ya hay una reserva hecha a esa hora");
+            return;
+        }
+
+        //crear el cliente
+        if (ClientService.Instance.GetClientByDni(dni) == null)
+        {
+            var newClient = new Client()
+            {
+                Name = name,
+                Genre = genre,
+                Dni = dni,
+                Address = adress,
+                Age = age
+            };
+
+            ClientService.Instance.CreateClient(newClient);
+            Console.WriteLine("\nCliente nuevo agregado a la base de datos.");
         }
 
         // Crear la reserva
