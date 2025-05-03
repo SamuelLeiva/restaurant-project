@@ -14,30 +14,26 @@ public class ReserveController
 {
     public void GetAllReserves()
     {
-        List<Reserve> reserveList = ReserveService.Instance.GetAllReserves();
+        var reserves = ReserveService.Instance.GetAllReserves();
 
-        if (reserveList.Count == 0)
+        if (!reserves.Any())
         {
             Console.WriteLine("No hay ninguna reserva hecha");
             return;
         }
 
-        Console.WriteLine("Lista de reservas");
-        Console.WriteLine("ID\tFecha y Hora\tStatus\tCliente\tMesa");
-        Console.WriteLine("---------------------------------------------");
-
-        foreach (Reserve reserve in reserveList)
+        PrintReserveHeader();
+        foreach (var reserve in reserves)
         {
-            Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status}\t{reserve.ReserveClient.Name}\t{reserve.ReserveTable.Id}");
+            PrintReserve(reserve);
         }
     }
 
     public void GetReservesByClient()
     {
-        Console.WriteLine("Ingrese el DNI del cliente");
-        string dni = Console.ReadLine();
+        string dni = ReadString("Ingrese el DNI del cliente: ");
 
-        Client client = ClientService.Instance.GetClientByDni(dni);
+        var client = ClientService.Instance.GetClientByDni(dni);
 
         if (client == null)
         {
@@ -45,9 +41,9 @@ public class ReserveController
             return;
         }
 
-        List<Reserve> reservesClient = ReserveService.Instance.GetReservesByClient(client.Id);
+        var clientReserves = ReserveService.Instance.GetReservesByClient(client.Id);
 
-        if (reservesClient.Count == 0)
+        if (!clientReserves.Any())
         {
             Console.WriteLine("Este cliente no ha hecho ninguna reserva");
             return;
@@ -56,18 +52,17 @@ public class ReserveController
         Console.WriteLine($"Reservas hechas por {client.Name}");
         Console.WriteLine("Id\tFecha y Hora\tStatus\tMesa");
 
-        foreach (Reserve reserve in reservesClient)
+        foreach (var reserve in clientReserves)
         {
-            Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status.ToString()}\t{reserve.ReserveTable.Id}");
+            Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status}\t{reserve.ReserveTable.Id}");
         }
     }
 
     public void GetReservesByTable()
     {
-        Console.WriteLine("Ingrese el N° de mesa: ");
-        int idTable = Convert.ToInt32(Console.ReadLine());
+        int idTable = ReadInt("Ingrese el N° de mesa: ");
 
-        Table table = TableService.Instance.GetTableById(idTable);
+        var table = TableService.Instance.GetTableById(idTable);
 
         if (table == null)
         {
@@ -75,9 +70,9 @@ public class ReserveController
             return;
         }
 
-        List<Reserve> reservesTable = ReserveService.Instance.GetReservesByTable(idTable);
+        var tableReserves = ReserveService.Instance.GetReservesByTable(idTable);
 
-        if (reservesTable.Count == 0)
+        if (!tableReserves.Any())
         {
             Console.WriteLine("Esta mesa no contiene ninguana reserva.");
             return;
@@ -86,7 +81,7 @@ public class ReserveController
         Console.WriteLine($"Reservas hechas en la mesa n° {idTable}");
         Console.WriteLine("Id\tFecha y Hora\tStatus\tCliente");
 
-        foreach (Reserve reserve in reservesTable)
+        foreach (var reserve in tableReserves)
         {
             Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status}\t{reserve.ReserveClient.Name}");
         }
@@ -94,160 +89,75 @@ public class ReserveController
 
     public void GetReservesByDate()
     {
-        Console.WriteLine("\nIngrese el día de la reserva");
-        int day = Convert.ToInt32(Console.ReadLine());
+        var date = ReadDate("Ingrese la fecha de la reserva: ");
 
-        Console.WriteLine("Ingrese el mes de la reserva");
-        int month = Convert.ToInt32(Console.ReadLine());
+        if (date == null) return;
 
-        Console.WriteLine("Ingrese el año de la reserva");
-        int year = Convert.ToInt32(Console.ReadLine());
-
-        DateTime fullDate = new DateTime(year, month, day);
-
-        List<Reserve> reserveList = ReserveService.Instance.GetReservesByDate(fullDate);
-
-        if (reserveList.Count == 0)
+        var reserves = ReserveService.Instance.GetReservesByDate(date.Value);
+        if (!reserves.Any())
         {
-            Console.WriteLine("No hay ninguna reserva hecha para ese día");
+            Console.WriteLine("No hay ninguna reserva hecha para ese día.");
             return;
         }
 
-        Console.WriteLine($"Lista de reservas del {day}/{month}/{year}");
-        Console.WriteLine("ID\tFecha y Hora\tStatus\tCliente\tMesa");
-        Console.WriteLine("---------------------------------------------");
-
-        foreach (Reserve reserve in reserveList)
+        Console.WriteLine($"Reservas del {date.Value:dd/MM/yyyy}");
+        PrintReserveHeader();
+        foreach (var reserve in reserves)
         {
-            Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status.ToString()}\t{reserve.ReserveClient.Name}\t{reserve.ReserveTable.Id}");
+            PrintReserve(reserve);
         }
     }
-
-    //public void GetReserveByTableAndDate()
-    //{
-    //    Console.WriteLine("Ingrese el N° de mesa: ");
-    //    int idTable = Convert.ToInt32(Console.ReadLine());
-
-    //    Console.WriteLine("\nIngrese el día de la reserva");
-    //    int day = Convert.ToInt32(Console.ReadLine());
-
-    //    Console.WriteLine("Ingrese el mes de la reserva");
-    //    int month = Convert.ToInt32(Console.ReadLine());
-
-    //    Console.WriteLine("Ingrese el año de la reserva");
-    //    int year = Convert.ToInt32(Console.ReadLine());
-
-    //    DateTime fullDate = new DateTime(year, month, day);
-
-    //    Reserve foundReserve = ReserveService.Instance.GetReserveByTableAndDate(idTable, fullDate);
-    //}
 
     public void CreateReserve()
     {
         Console.WriteLine("\n=== Crear nueva reserva ===");
-        Console.WriteLine("Ingrese el n° de asientos deseados:");
-        if (!int.TryParse(Console.ReadLine(), out int numSeats) || numSeats <= 0)
-        {
-            Console.WriteLine("Número de asientos inválido.");
+        if (!ReadPositiveInt("Ingrese el n° de asientos deseados:", out var numSeats))
             return;
-        }
 
         //obtenemos mesas con ese n° de asientos
-        List<Table> tableList = TableService.Instance.GetTablesByNumSeats(numSeats);
-
-        Console.WriteLine("\nMesas disponibles: ");
-        Console.WriteLine("ID\tN° de asientos");
-
-        foreach (Table table in tableList)
+        var availableTables = TableService.Instance.GetTablesByNumSeats(numSeats);
+        if (!availableTables.Any())
         {
-            Console.WriteLine($"{table.Id}\t{table.NumSeats}");
-        }
-
-        Console.WriteLine("Elija una de las mesas");
-        int numTable = Convert.ToInt32(Console.ReadLine());
-
-        Table foundTable = TableService.Instance.GetTableById(numTable);
-
-        //Datos del cliente
-        Console.WriteLine("\nDatos del cliente");
-        Console.WriteLine("Nombre del cliente: ");
-        string name = Console.ReadLine();
-
-        Console.WriteLine("DNI del cliente");
-        string dni = Console.ReadLine();
-
-        Console.WriteLine("Género del cliente (0:Masculino, 1:Femenino): ");
-        Genre genre = (Genre)Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine("Dirección del cliente");
-        string adress = Console.ReadLine();
-
-        Console.WriteLine("Edad del cliente");
-        int age = Convert.ToInt32(Console.ReadLine());
-
-        
-
-        // Ingresar la fecha
-        Console.WriteLine("Ingrese el día de la reserva:");
-        if (!int.TryParse(Console.ReadLine(), out int day) || day <= 0 || day > 31)
-        {
-            Console.WriteLine("Día inválido.");
+            Console.WriteLine("No hay mesas disponibles con esa cantidad de asientos.");
             return;
         }
 
-        Console.WriteLine("Ingrese el mes de la reserva:");
-        if (!int.TryParse(Console.ReadLine(), out int month) || month <= 0 || month > 12)
+        PrintTables(availableTables);
+
+        if (!ReadPositiveInt("Elija una de las mesas:", out var idTable))
+            return;
+
+        var selectedTable = TableService.Instance.GetTableById(idTable);
+        if (selectedTable == null)
         {
-            Console.WriteLine("Mes inválido.");
+            Console.WriteLine("Mesa no encontrada.");
             return;
         }
 
-        int year = DateTime.Now.Year;
+        var client = ReadClientData();
 
-        Console.WriteLine("\nIngrese la hora de la reserva:");
-        int hour = Convert.ToInt32(Console.ReadLine());
-
-        DateTime date;
-        try
+        if (ClientService.Instance.GetClientByDni(client.Dni) == null)
         {
-            date = new DateTime(year, month, day, hour, 0, 0);
+            ClientService.Instance.CreateClient(client);
+            Console.WriteLine("Cliente agregado a la base de datos.");
         }
-        catch (Exception)
+
+        var date = ReadDate();
+        if (date == null) return;
+
+        var existingReserve = ReserveService.Instance.GetReserveByTableAndDate(selectedTable.Id, date.Value);
+        if (existingReserve != null)
         {
-            Console.WriteLine("Fecha inválida.");
+            Console.WriteLine("Ya hay una reserva hecha a esa hora.");
             return;
-        }
-
-        //verificar si foundTable tiene una reserva a la misma fecha y hora
-        Reserve reserve = ReserveService.Instance.GetReserveByTableAndDate(foundTable.Id, date);
-
-        if (reserve != null) {
-            Console.WriteLine("Ya hay una reserva hecha a esa hora");
-            return;
-        }
-
-        //crear el cliente
-        if (ClientService.Instance.GetClientByDni(dni) == null)
-        {
-            var newClient = new Client()
-            {
-                Name = name,
-                Genre = genre,
-                Dni = dni,
-                Address = adress,
-                Age = age
-            };
-
-            ClientService.Instance.CreateClient(newClient);
-            Console.WriteLine("\nCliente nuevo agregado a la base de datos.");
         }
 
         // Crear la reserva
         var newReserve = new Reserve
         {
-            DateAndHour = date,
+            DateAndHour = date.Value,
             Status = ReserveStatus.ACTIVO,
-            ReserveTable = foundTable,
+            ReserveTable = selectedTable,
             ReserveClient = ClientService.Instance.GetClientByDni(dni)
         };
 
@@ -281,5 +191,91 @@ public class ReserveController
 
         ReserveService.Instance.CreateReserve(newReserve1);
         ReserveService.Instance.CreateReserve(newReserve2);
+    }
+
+    // métodos auxiliares
+    private int ReadInt(string message)
+    {
+        Console.Write(message);
+        int result;
+        while (!int.TryParse(Console.ReadLine(), out result))
+        {
+            Console.Write("Entrada inválida. Intente nuevamente: ");
+        }
+        return result;
+    }
+
+    private bool ReadPositiveInt(string message, out int result)
+    {
+        Console.WriteLine(message);
+        return int.TryParse(Console.ReadLine(), out result) && result > 0;
+    }
+
+    private string ReadString(string message)
+    {
+        Console.Write(message + " ");
+        return Console.ReadLine() ?? string.Empty;
+    }
+
+    private DateTime? ReadDate(string prompt)
+    {
+        Console.WriteLine($"{prompt} (dd/mm/yyyy): ");
+        var input = Console.ReadLine();
+        if (DateTime.TryParse(input, out var date))
+        {
+            return date;
+        }
+
+        Console.WriteLine("Fecha inválida.");
+        return null;
+    }
+
+    private Client ReadClientData()
+    {
+        Console.WriteLine("\nDatos del cliente:");
+        Console.Write("Nombre: ");
+        var name = Console.ReadLine();
+
+        Console.Write("DNI: ");
+        var dni = Console.ReadLine();
+
+        Console.Write("Género (0: Masculino, 1: Femenino): ");
+        var genre = (Genre)Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Dirección: ");
+        var address = Console.ReadLine();
+
+        Console.Write("Edad: ");
+        var age = Convert.ToInt32(Console.ReadLine());
+
+        return new Client
+        {
+            Name = name,
+            Dni = dni,
+            Genre = genre,
+            Address = address,
+            Age = age
+        };
+    }
+
+    private void PrintReserveHeader()
+    {
+        Console.WriteLine("ID\tFecha y Hora\tStatus\tCliente\tMesa");
+        Console.WriteLine("---------------------------------------------");
+    }
+
+    private void PrintReserve(Reserve reserve)
+    {
+        Console.WriteLine($"{reserve.Id}\t{reserve.DateAndHour}\t{reserve.Status}\t{reserve.ReserveClient.Name}\t{reserve.ReserveTable.Id}");
+    }
+
+    private void PrintTables(List<Table> tables)
+    {
+        Console.WriteLine("Mesas disponibles:");
+        Console.WriteLine("ID\tN° de asientos");
+        foreach (var table in tables)
+        {
+            Console.WriteLine($"{table.Id}\t{table.NumSeats}");
+        }
     }
 }
