@@ -44,7 +44,9 @@ public class ReserveService : IReserveService
 
     public List<Reserve> GetReservesByDate(DateTime date)
     {
-        return reservesDB.FindAll(r => r.DateAndHour == date);
+        return reservesDB.FindAll(r => r.DateAndHour.Year == date.Year
+        && r.DateAndHour.Month == date.Month
+        && r.DateAndHour.Day == date.Day);
     }
 
     public List<Reserve> GetReservesByClient(int clientId)
@@ -59,8 +61,8 @@ public class ReserveService : IReserveService
 
     public Reserve GetReserveByTableAndDate(int tableId, DateTime date)
     {
-        return reservesDB.FirstOrDefault(r => r.ReserveTable.Id == tableId 
-        && r.DateAndHour.Year == date.Year 
+        return reservesDB.FirstOrDefault(r => r.ReserveTable.Id == tableId
+        && r.DateAndHour.Year == date.Year
         && r.DateAndHour.Month == date.Month
         && r.DateAndHour.Day == date.Day
         && r.DateAndHour.Hour == date.Hour);
