@@ -70,18 +70,7 @@ public class TableController
         TableService.Instance.FillTables();
     }
 
-    //métodos auxiliares
-    //private int ReadInt(string message)
-    //{
-    //    Console.Write(message);
-    //    int result;
-    //    while (!int.TryParse(Console.ReadLine(), out result))
-    //    {
-    //        Console.Write("Entrada inválida. Intente nuevamente: ");
-    //    }
-    //    return result;
-    //}
-
+    //--------------- métodos auxiliares ---------------------
     private void PrintTableHeader(string title)
     {
         Console.WriteLine($"\n{title}");
