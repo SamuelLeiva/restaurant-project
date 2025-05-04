@@ -37,10 +37,15 @@ public class ReserveService : IReserveService
         _reserves.Add(reserve);
     }
 
-    public void CompleteReserve(Reserve reserve)
-    {
-        reserve.ChangeStatus();
-    }
+    //public void CompleteReserve(Reserve reserve)
+    //{
+    //    reserve.ChangeStatus();
+    //}
+
+    //public void CancelReserve(Reserve reserve)
+    //{
+    //    _reserves.Remove(reserve);
+    //}
 
     public List<Reserve> GetAllReserves()
     {
@@ -84,4 +89,6 @@ public class ReserveService : IReserveService
         && r.DateAndHour.Day == date.Day
         && r.DateAndHour.Hour == date.Hour);
     }
+
+    
 }

@@ -44,6 +44,11 @@ public class ClientService : IClientService
     {
         client.AddReserve(reserve);
     }
+
+    public Client? GetClientById(int id)
+    {
+        return _clients.FirstOrDefault(c => c.Id == id);
+    }
     public Client? GetClientByDni(string dni)
     {
         return _clients.FirstOrDefault(c => c.Dni == dni);
@@ -78,6 +83,4 @@ public class ClientService : IClientService
         _clients.Add(client1);
         _clients.Add(client2);
     }
-
-    
 }

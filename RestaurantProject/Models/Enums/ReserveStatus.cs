@@ -9,5 +9,6 @@ namespace RestaurantProject.Models.Enums;
 public enum ReserveStatus
 {
     ACTIVO,
-    COMPLETO
+    COMPLETO,
+    CANCELADO
 }

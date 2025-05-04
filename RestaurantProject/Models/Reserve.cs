@@ -22,9 +22,14 @@ public class Reserve
         Id = _nextId++;
     }
 
-    public void ChangeStatus()
+    public void CompleteReserve()
     {
         Status = ReserveStatus.COMPLETO;
+    }
+
+    public void CancelReserve()
+    {
+        Status = ReserveStatus.CANCELADO;
     }
 
 }
