@@ -10,6 +10,7 @@ namespace RestaurantProject.Models.Interfaces;
 public interface IClientService
 {
     List<Client> GetAllClients();
+    Client GetClientById(int id);
     Client GetClientByDni(string dni);
     void CreateClient(Client client);
     void FillClients();
