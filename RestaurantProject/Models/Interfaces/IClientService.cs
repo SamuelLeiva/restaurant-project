@@ -13,4 +13,5 @@ public interface IClientService
     Client GetClientByDni(string dni);
     void CreateClient(Client client);
     void FillClients();
+    void AddReserveToClient(Client client, Reserve reserve);
 }

@@ -144,16 +144,22 @@ public class ReserveController
             return;
         }
 
+        var reserveClient = ClientService.Instance.GetClientByDni(client.Dni);
+
         // Crear la reserva
         var newReserve = new Reserve
         {
             DateAndHour = date.Value,
             Status = ReserveStatus.ACTIVO,
             ReserveTable = selectedTable,
-            ReserveClient = ClientService.Instance.GetClientByDni(client.Dni)!
+            ReserveClient = reserveClient!
         };
 
         ReserveService.Instance.CreateReserve(newReserve);
+
+        //añadir reserva a cliente
+        ClientService.Instance.AddReserveToClient(reserveClient, newReserve);
+
         Console.WriteLine("Reserva creada exitosamente.");
     }
 
