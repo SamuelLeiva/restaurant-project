@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestaurantProject.Models;
+﻿using RestaurantProject.Models;
 using RestaurantProject.Models.Enums;
-using RestaurantProject.Models.Interfaces;
 using RestaurantProject.Services;
+using RestaurantProject.Validators;
 
 namespace RestaurantProject.Controllers;
 
@@ -31,7 +26,7 @@ public class ReserveController
 
     public void GetReservesByClient()
     {
-        string dni = ReadString("Ingrese el DNI del cliente: ");
+        string dni = DataValidator.ReadNonEmptyString("Ingrese el DNI del cliente: ");
 
         var client = ClientService.Instance.GetClientByDni(dni);
 
@@ -60,7 +55,7 @@ public class ReserveController
 
     public void GetReservesByTable()
     {
-        int idTable = ReadInt("Ingrese el N° de mesa: ");
+        int idTable = DataValidator.ReadPositiveInt("Ingrese el N° de mesa: ");
 
         var table = TableService.Instance.GetTableById(idTable);
 
@@ -89,7 +84,7 @@ public class ReserveController
 
     public void GetReservesByDate()
     {
-        var date = ReadDate("Ingrese la fecha de la reserva: ");
+        var date = DataValidator.ReadDate("Ingrese la fecha de la reserva: ");
 
         if (date == null) return;
 
@@ -111,8 +106,7 @@ public class ReserveController
     public void CreateReserve()
     {
         Console.WriteLine("\n=== Crear nueva reserva ===");
-        if (!ReadPositiveInt("Ingrese el n° de asientos deseados:", out var numSeats))
-            return;
+        int numSeats = DataValidator.ReadPositiveInt("Ingrese el n° de asientos deseados: ");
 
         //obtenemos mesas con ese n° de asientos
         var availableTables = TableService.Instance.GetTablesByNumSeats(numSeats);
@@ -124,8 +118,7 @@ public class ReserveController
 
         PrintTables(availableTables);
 
-        if (!ReadPositiveInt("Elija una de las mesas:", out var idTable))
-            return;
+        int idTable = DataValidator.ReadPositiveInt("Elija una de las mesas: ");
 
         var selectedTable = TableService.Instance.GetTableById(idTable);
         if (selectedTable == null)
@@ -134,16 +127,15 @@ public class ReserveController
             return;
         }
 
-        var client = ReadClientData();
+        var client = DataValidator.ReadClientData(); //acá vamos
 
         if (ClientService.Instance.GetClientByDni(client.Dni) == null)
         {
-            ClientService.Instance.CreateClient(client);
+            ClientService.Instance.CreateClient(client); //si es nuevo, añadirlo a la lista de datos
             Console.WriteLine("Cliente agregado a la base de datos.");
         }
 
-        var date = ReadDate("Ingrese ");
-        if (date == null) return;
+        var date = DataValidator.ReadDateWithHour("Ingrese la fecha de la reserva: ");
 
         var existingReserve = ReserveService.Instance.GetReserveByTableAndDate(selectedTable.Id, date.Value);
         if (existingReserve != null)
@@ -194,69 +186,46 @@ public class ReserveController
     }
 
     // métodos auxiliares
-    private int ReadInt(string message)
-    {
-        Console.Write(message);
-        int result;
-        while (!int.TryParse(Console.ReadLine(), out result))
-        {
-            Console.Write("Entrada inválida. Intente nuevamente: ");
-        }
-        return result;
-    }
+    //private DateTime? ReadDate(string message)
+    //{
+    //    Console.WriteLine($"{message} (dd/mm/yyyy): ");
+    //    var input = Console.ReadLine();
+    //    if (DateTime.TryParse(input, out var date))
+    //    {
+    //        return date;
+    //    }
 
-    private bool ReadPositiveInt(string message, out int result)
-    {
-        Console.WriteLine(message);
-        return int.TryParse(Console.ReadLine(), out result) && result > 0;
-    }
+    //    Console.WriteLine("Fecha inválida.");
+    //    return null;
+    //}
 
-    private string ReadString(string message)
-    {
-        Console.Write(message + " ");
-        return Console.ReadLine() ?? string.Empty;
-    }
+    //private Client ReadClientData()
+    //{
+    //    Console.WriteLine("\nDatos del cliente:");
+    //    Console.Write("Nombre: ");
+    //    var name = Console.ReadLine();
 
-    private DateTime? ReadDate(string message)
-    {
-        Console.WriteLine($"{message} (dd/mm/yyyy): ");
-        var input = Console.ReadLine();
-        if (DateTime.TryParse(input, out var date))
-        {
-            return date;
-        }
+    //    Console.Write("DNI: ");
+    //    var dni = Console.ReadLine();
 
-        Console.WriteLine("Fecha inválida.");
-        return null;
-    }
+    //    Console.Write("Género (0: Masculino, 1: Femenino): ");
+    //    var genre = (Genre)Convert.ToInt32(Console.ReadLine());
 
-    private Client ReadClientData()
-    {
-        Console.WriteLine("\nDatos del cliente:");
-        Console.Write("Nombre: ");
-        var name = Console.ReadLine();
+    //    Console.Write("Dirección: ");
+    //    var address = Console.ReadLine();
 
-        Console.Write("DNI: ");
-        var dni = Console.ReadLine();
+    //    Console.Write("Edad: ");
+    //    var age = Convert.ToInt32(Console.ReadLine());
 
-        Console.Write("Género (0: Masculino, 1: Femenino): ");
-        var genre = (Genre)Convert.ToInt32(Console.ReadLine());
-
-        Console.Write("Dirección: ");
-        var address = Console.ReadLine();
-
-        Console.Write("Edad: ");
-        var age = Convert.ToInt32(Console.ReadLine());
-
-        return new Client
-        {
-            Name = name,
-            Dni = dni,
-            Genre = genre,
-            Address = address,
-            Age = age
-        };
-    }
+    //    return new Client
+    //    {
+    //        Name = name,
+    //        Dni = dni,
+    //        Genre = genre,
+    //        Address = address,
+    //        Age = age
+    //    };
+    //}
 
     private void PrintReserveHeader()
     {

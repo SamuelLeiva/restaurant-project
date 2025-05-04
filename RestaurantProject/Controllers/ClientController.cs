@@ -10,10 +10,16 @@ public class ClientController
     public void CreateClient()
     {
         Console.WriteLine("\nAgregar un nuevo cliente:");
+        string dni = DataValidator.ReadNonEmptyString("DNI del cliente:");
+        var existingClient = ClientService.Instance.GetClientByDni(dni);
+        if (existingClient != null)
+        {
+            Console.WriteLine("Cliente ya registrado con ese DNI.");
+            return;
+        }
 
         string name = DataValidator.ReadNonEmptyString("Nombre del cliente: ");
         Genre genre = (Genre)DataValidator.ReadGenre("Género del cliente (0:Masculino, 1:Femenino): ");
-        string dni = DataValidator.ReadNonEmptyString("DNI del cliente:");
         string address = DataValidator.ReadNonEmptyString("Dirección del cliente:");
         int age = DataValidator.ReadPositiveInt("Edad del cliente:");
 
