@@ -163,6 +163,23 @@ public class ReserveController
         Console.WriteLine("Reserva creada exitosamente.");
     }
 
+    public void CompleteReserve()
+    {
+        Console.WriteLine("\n=== Completar reserva ===");
+        int idReserve = DataValidator.ReadPositiveInt("Ingrese el id de la reserva a completar: ");
+
+        var foundReserve = ReserveService.Instance.GetReserveById(idReserve);
+
+        if (foundReserve != null)
+        {
+            ReserveService.Instance.CompleteReserve(foundReserve);
+            Console.WriteLine("Reserva completada.");
+            return;
+        }
+
+        Console.WriteLine($"No existe reserva con id {idReserve}");
+    }
+
     public void FillInitialReserves()
     {
         Client client1 = ClientService.Instance.GetClientByDni("78874956");
@@ -191,48 +208,7 @@ public class ReserveController
         ReserveService.Instance.CreateReserve(newReserve2);
     }
 
-    // métodos auxiliares
-    //private DateTime? ReadDate(string message)
-    //{
-    //    Console.WriteLine($"{message} (dd/mm/yyyy): ");
-    //    var input = Console.ReadLine();
-    //    if (DateTime.TryParse(input, out var date))
-    //    {
-    //        return date;
-    //    }
-
-    //    Console.WriteLine("Fecha inválida.");
-    //    return null;
-    //}
-
-    //private Client ReadClientData()
-    //{
-    //    Console.WriteLine("\nDatos del cliente:");
-    //    Console.Write("Nombre: ");
-    //    var name = Console.ReadLine();
-
-    //    Console.Write("DNI: ");
-    //    var dni = Console.ReadLine();
-
-    //    Console.Write("Género (0: Masculino, 1: Femenino): ");
-    //    var genre = (Genre)Convert.ToInt32(Console.ReadLine());
-
-    //    Console.Write("Dirección: ");
-    //    var address = Console.ReadLine();
-
-    //    Console.Write("Edad: ");
-    //    var age = Convert.ToInt32(Console.ReadLine());
-
-    //    return new Client
-    //    {
-    //        Name = name,
-    //        Dni = dni,
-    //        Genre = genre,
-    //        Address = address,
-    //        Age = age
-    //    };
-    //}
-
+    //-------------------- métodos auxiliares ------------------------------------
     private void PrintReserveHeader()
     {
         Console.WriteLine("ID\tFecha y Hora\tStatus\tCliente\tMesa");

@@ -103,6 +103,8 @@ public class RestaurantSystem
             Console.WriteLine("3.Obtener reservas por mesa");
             Console.WriteLine("4.Obtener reservas por fecha");
             Console.WriteLine("5.Crear una nueva reserva");
+            Console.WriteLine("6.Completar una reserva");
+            Console.WriteLine("7.Cancelar una reserva");
             Console.WriteLine("0.Atrás");
 
             option = Console.ReadLine();
@@ -123,6 +125,12 @@ public class RestaurantSystem
                     break;
                 case "5":
                     reserveController.CreateReserve();
+                    break;
+                case "6":
+                    reserveController.CompleteReserve();
+                    break;
+                case "7":
+                    //reserveController.CreateReserve();
                     break;
                 case "0":
                     exit = true;

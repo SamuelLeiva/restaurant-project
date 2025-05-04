@@ -37,9 +37,19 @@ public class ReserveService : IReserveService
         _reserves.Add(reserve);
     }
 
+    public void CompleteReserve(Reserve reserve)
+    {
+        reserve.ChangeStatus();
+    }
+
     public List<Reserve> GetAllReserves()
     {
         return _reserves;
+    }
+
+    public Reserve? GetReserveById(int id)
+    {
+        return _reserves.FirstOrDefault(r => r.Id == id);
     }
 
     public List<Reserve> GetReservesByDate(DateTime date)
