@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestaurantProject.Models;
-using RestaurantProject.Models.Enums;
-using RestaurantProject.Models.Interfaces;
+﻿using RestaurantProject.Models;
 using RestaurantProject.Services;
+using RestaurantProject.Validators;
 
 namespace RestaurantProject.Controllers;
 
@@ -29,7 +23,7 @@ public class TableController
 
     public void GetTableById()
     {
-        int id = ReadInt("Ingrese el N° de mesa");
+        int id = DataValidator.ReadPositiveInt("Ingrese el N° de mesa");
 
         var table = TableService.Instance.GetTableById(id);
 
@@ -45,7 +39,7 @@ public class TableController
 
     public void GetTablesByNumSeats()
     {
-        int minSeats = ReadInt("Ingrese el número mínimo de asientos: ");
+        int minSeats = DataValidator.ReadPositiveInt("Ingrese el número mínimo de asientos: ");
 
         var tables = TableService.Instance.GetTablesByNumSeats(minSeats);
 
@@ -63,7 +57,7 @@ public class TableController
     {
         Console.WriteLine("\nAgregar una nueva mesa:");
 
-        int seats = ReadInt("Número de asientos de la mesa: ");
+        int seats = DataValidator.ReadPositiveInt("Número de asientos de la mesa: ");
 
         var table = new Table { NumSeats = seats };
         TableService.Instance.CreateTable(table);
@@ -77,16 +71,16 @@ public class TableController
     }
 
     //métodos auxiliares
-    private int ReadInt(string message)
-    {
-        Console.Write(message);
-        int result;
-        while (!int.TryParse(Console.ReadLine(), out result))
-        {
-            Console.Write("Entrada inválida. Intente nuevamente: ");
-        }
-        return result;
-    }
+    //private int ReadInt(string message)
+    //{
+    //    Console.Write(message);
+    //    int result;
+    //    while (!int.TryParse(Console.ReadLine(), out result))
+    //    {
+    //        Console.Write("Entrada inválida. Intente nuevamente: ");
+    //    }
+    //    return result;
+    //}
 
     private void PrintTableHeader(string title)
     {

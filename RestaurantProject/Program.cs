@@ -15,7 +15,7 @@ internal class Program
         {
             while (!exit)
             {
-                Console.WriteLine("========== RESTAURANT MANAGEMENT SYSTEM ==========");
+                Console.WriteLine("\n========== RESTAURANT MANAGEMENT SYSTEM ==========");
                 Console.WriteLine("1. Gestión de Clientes");
                 Console.WriteLine("2. Gestión de Mesas");
                 Console.WriteLine("3. Gestión de Reservas");
@@ -47,7 +47,7 @@ internal class Program
             }
         } catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine($"Error inesperado: {ex.Message}");
         }
     }
 }

@@ -142,7 +142,7 @@ public class ReserveController
             Console.WriteLine("Cliente agregado a la base de datos.");
         }
 
-        var date = ReadDate();
+        var date = ReadDate("Ingrese ");
         if (date == null) return;
 
         var existingReserve = ReserveService.Instance.GetReserveByTableAndDate(selectedTable.Id, date.Value);
@@ -158,7 +158,7 @@ public class ReserveController
             DateAndHour = date.Value,
             Status = ReserveStatus.ACTIVO,
             ReserveTable = selectedTable,
-            ReserveClient = ClientService.Instance.GetClientByDni(dni)
+            ReserveClient = ClientService.Instance.GetClientByDni(client.Dni)!
         };
 
         ReserveService.Instance.CreateReserve(newReserve);
@@ -217,9 +217,9 @@ public class ReserveController
         return Console.ReadLine() ?? string.Empty;
     }
 
-    private DateTime? ReadDate(string prompt)
+    private DateTime? ReadDate(string message)
     {
-        Console.WriteLine($"{prompt} (dd/mm/yyyy): ");
+        Console.WriteLine($"{message} (dd/mm/yyyy): ");
         var input = Console.ReadLine();
         if (DateTime.TryParse(input, out var date))
         {

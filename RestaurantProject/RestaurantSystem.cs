@@ -23,7 +23,7 @@ public class RestaurantSystem
         bool exit = false;
         while (!exit)
         {
-            Console.WriteLine("========== GESTIÓN DE CLIENTES ==========");
+            Console.WriteLine("\n========== GESTIÓN DE CLIENTES ==========");
             Console.WriteLine("1.Ver lista de clientes");
             Console.WriteLine("2.Buscar cliente");
             Console.WriteLine("3.Añadir nuevo cliente");
@@ -58,7 +58,7 @@ public class RestaurantSystem
         bool exit = false;
         while (!exit)
         {
-            Console.WriteLine("========== GESTIÓN DE MESAS ==========");
+            Console.WriteLine("\n========== GESTIÓN DE MESAS ==========");
             Console.WriteLine("1.Ver lista de mesas");
             Console.WriteLine("2.Buscar mesa por id");
             Console.WriteLine("3.Añadir nueva mesa");
@@ -97,7 +97,7 @@ public class RestaurantSystem
         bool exit = false;
         while (!exit)
         {
-            Console.WriteLine("========== GESTIÓN DE RESERVAS ==========");
+            Console.WriteLine("\n========== GESTIÓN DE RESERVAS ==========");
             Console.WriteLine("1.Ver lista de reservas");
             Console.WriteLine("2.Obtener reservas por cliente");
             Console.WriteLine("3.Obtener reservas por mesa");
