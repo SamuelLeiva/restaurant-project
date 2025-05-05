@@ -172,14 +172,18 @@ public class ReserveController
 
         if (foundReserve != null)
         {
+            if (foundReserve.Status == ReserveStatus.CANCELADO)
+            {
+                Console.WriteLine("Esta reserva fue cancelada.");
+                return;
+            }
+            else if (foundReserve.Status == ReserveStatus.COMPLETO)
+            {
+                Console.WriteLine("Esta reserva ya fue completada.");
+                return;
+            }
             ReserveService.Instance.CompleteReserve(foundReserve);
-            Console.WriteLine("Reserva completada.");
-            return;
-        }
-
-        if (foundReserve.Status == ReserveStatus.CANCELADO)
-        {
-            Console.WriteLine("Esta reserva fue cancelada.");
+            Console.WriteLine("Reserva completada exitosamente.");
             return;
         }
 
@@ -195,8 +199,18 @@ public class ReserveController
 
         if (foundReserve != null)
         {
+            if (foundReserve.Status == ReserveStatus.CANCELADO)
+            {
+                Console.WriteLine("Esta reserva ya fue cancelada.");
+                return;
+            }
+            else if (foundReserve.Status == ReserveStatus.COMPLETO)
+            {
+                Console.WriteLine("Esta reserva ya fue completada.");
+                return;
+            }
             ReserveService.Instance.CancelReserve(foundReserve);
-            Console.WriteLine("Reserva cancelada.");
+            Console.WriteLine("Reserva cancelada exitosamente.");
             return;
         }
 
