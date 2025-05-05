@@ -25,8 +25,9 @@ public class RestaurantSystem
         {
             Console.WriteLine("\n========== GESTIÓN DE CLIENTES ==========");
             Console.WriteLine("1.Ver lista de clientes");
-            Console.WriteLine("2.Buscar cliente");
-            Console.WriteLine("3.Añadir nuevo cliente");
+            Console.WriteLine("2.Buscar cliente por id");
+            Console.WriteLine("3.Buscar cliente por DNI");
+            Console.WriteLine("4.Añadir nuevo cliente");
             Console.WriteLine("0.Atrás");
 
             option = Console.ReadLine();
@@ -37,9 +38,12 @@ public class RestaurantSystem
                     clientController.GetAllClients();
                     break;
                 case "2":
-                    clientController.GetClientByDni();
+                    clientController.GetClientById();
                     break;
                 case "3":
+                    clientController.GetClientByDni();
+                    break;
+                case "4":
                     clientController.CreateClient();
                     break;
                 case "0":
@@ -130,7 +134,7 @@ public class RestaurantSystem
                     reserveController.CompleteReserve();
                     break;
                 case "7":
-                    //reserveController.CreateReserve();
+                    reserveController.CancelReserve();
                     break;
                 case "0":
                     exit = true;

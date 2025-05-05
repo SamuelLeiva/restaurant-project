@@ -37,15 +37,15 @@ public class ReserveService : IReserveService
         _reserves.Add(reserve);
     }
 
-    //public void CompleteReserve(Reserve reserve)
-    //{
-    //    reserve.ChangeStatus();
-    //}
+    public void CompleteReserve(Reserve reserve)
+    {
+        reserve.CompleteReserve();
+    }
 
-    //public void CancelReserve(Reserve reserve)
-    //{
-    //    _reserves.Remove(reserve);
-    //}
+    public void CancelReserve(Reserve reserve)
+    {
+        reserve.CancelReserve();
+    }
 
     public List<Reserve> GetAllReserves()
     {

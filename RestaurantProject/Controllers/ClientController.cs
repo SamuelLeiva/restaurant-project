@@ -55,6 +55,23 @@ public class ClientController
         }
     }
 
+    public void GetClientById()
+    {
+        int idClient = DataValidator.ReadPositiveInt("Ingrese el Id del cliente: ");
+
+        var client = ClientService.Instance.GetClientById(idClient);
+
+        if (client == null)
+        {
+            Console.WriteLine("Cliente no encontrado.");
+            return;
+        }
+
+        Console.WriteLine("\n=== Cliente encontrado ===");
+        PrintClientHeader();
+        PrintClient(client);
+    }
+
     public void GetClientByDni()
     {
         string dni = DataValidator.ReadNonEmptyString("Ingrese el DNI del cliente:");

@@ -177,6 +177,29 @@ public class ReserveController
             return;
         }
 
+        if (foundReserve.Status == ReserveStatus.CANCELADO)
+        {
+            Console.WriteLine("Esta reserva fue cancelada.");
+            return;
+        }
+
+        Console.WriteLine($"No existe reserva con id {idReserve}");
+    }
+
+    public void CancelReserve()
+    {
+        Console.WriteLine("\n=== Cancelar reserva ===");
+        int idReserve = DataValidator.ReadPositiveInt("Ingrese el id de la reserva a cancelar: ");
+
+        var foundReserve = ReserveService.Instance.GetReserveById(idReserve);
+
+        if (foundReserve != null)
+        {
+            ReserveService.Instance.CancelReserve(foundReserve);
+            Console.WriteLine("Reserva cancelada.");
+            return;
+        }
+
         Console.WriteLine($"No existe reserva con id {idReserve}");
     }
 
