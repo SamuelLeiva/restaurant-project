@@ -12,7 +12,7 @@ public interface IReserveService
     Reserve GetReserveById(int id);
     void CreateReserve(Reserve reserve);
     void CompleteReserve(Reserve reserve);
-    void DeleteReserve(Reserve reserve);
+    void CancelReserve(Reserve reserve);
     List<Reserve> GetReservesByClient(int clientId);
     List<Reserve> GetReservesByTable(int tableId);
     List<Reserve> GetReservesByDate(DateTime date);

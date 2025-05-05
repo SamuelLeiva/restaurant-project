@@ -60,6 +60,22 @@ public static class DataValidator
         }
     }
 
+    public static string ReadDni(string message)
+    {
+        while (true)
+        {
+            Console.Write(message);
+            var input = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(input.Trim()) && input.Length == 8 && input.All(char.IsDigit))
+            {
+                return input;
+            }
+
+            Console.WriteLine("Entrada inválida. Ingrese un DNI válido de 8 dígitos numéricos.");
+        }
+    }
+
     public static DateTime? ReadDate(string message)
     {
         while (true)

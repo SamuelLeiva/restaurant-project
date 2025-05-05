@@ -10,7 +10,7 @@ public class ClientController
     public void CreateClient()
     {
         Console.WriteLine("\nAgregar un nuevo cliente:");
-        string dni = DataValidator.ReadNonEmptyString("DNI del cliente:");
+        string dni = DataValidator.ReadDni("DNI del cliente:");
         var existingClient = ClientService.Instance.GetClientByDni(dni);
         if (existingClient != null)
         {
@@ -74,7 +74,7 @@ public class ClientController
 
     public void GetClientByDni()
     {
-        string dni = DataValidator.ReadNonEmptyString("Ingrese el DNI del cliente:");
+        string dni = DataValidator.ReadDni("Ingrese el DNI del cliente:");
 
         var client = ClientService.Instance.GetClientByDni(dni);
 

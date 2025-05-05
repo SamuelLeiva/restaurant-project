@@ -26,7 +26,7 @@ public class ReserveController
 
     public void GetReservesByClient()
     {
-        string dni = DataValidator.ReadNonEmptyString("Ingrese el DNI del cliente: ");
+        string dni = DataValidator.ReadDni("Ingrese el DNI del cliente: ");
 
         var client = ClientService.Instance.GetClientByDni(dni);
 
