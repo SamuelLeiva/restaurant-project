@@ -135,7 +135,7 @@ public static class DataValidator
     {
         Console.WriteLine("\nDatos del cliente:");
 
-        string dni = ReadNonEmptyString("Dni del cliente: ");
+        string dni = ReadDni("Dni del cliente: ");
 
         var existingClient = ClientService.Instance.GetClientByDni(dni);
         if (existingClient != null)

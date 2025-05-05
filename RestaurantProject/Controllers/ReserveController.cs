@@ -120,12 +120,19 @@ public class ReserveController
 
         int idTable = DataValidator.ReadPositiveInt("Elija una de las mesas: ");
 
-        var selectedTable = TableService.Instance.GetTableById(idTable);
-        if (selectedTable == null)
+        bool isAvailable = availableTables.Any(t => t.Id == idTable);
+        if (!isAvailable)
         {
-            Console.WriteLine("Mesa no encontrada.");
+            Console.WriteLine("El id ingresado no es de ninguna mesa disponible.");
             return;
         }
+
+        var selectedTable = TableService.Instance.GetTableById(idTable);
+        //if (selectedTable == null)
+        //{
+        //    Console.WriteLine("Mesa no encontrada.");
+        //    return;
+        //}
 
         var client = DataValidator.ReadClientData(); //acá vamos
 
